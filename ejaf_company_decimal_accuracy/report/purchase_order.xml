@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="uruk_report_purchaseorder_document" inherit_id="purchase.report_purchaseorder_document">
+            <xpath expr="//table//tbody//tr//td[4]" position="replace">
+                <td class="text-right" t-if="o.company_id.is_not_decimal_accuracy">
+                    <span t-esc="round(line.product_qty)"/>
+                    <span t-field="line.product_uom.name" groups="uom.group_uom"/>
+                </td>
+                <td class="text-right" t-else="">
+                    <span t-field="line.product_qty"/>
+                    <span t-field="line.product_uom.name" groups="uom.group_uom"/>
+                </td>
+            </xpath>
+        </template>
+
+
+    </data>
+</odoo>

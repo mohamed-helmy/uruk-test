@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="internal_request_id" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='scheduled_date']" position="before">
+                    <field name="transit_type" style="color:red" readonly="1" force_save="1"
+                           attrs="{'invisible': [('state', '=', 'done')]}"/>
+                </xpath>
+
+                <xpath expr="//page[@name='extra']//group[last()]" position="after">
+                    <group>
+                        <field name="is_transit_stage"
+                               attrs="{'readonly': [('state', '=', 'done')], 'invisible': ['|' ,('state', 'not in', ['assigned','done']),('picking_type_code', '!=', 'internal')]}"/>
+                        <field name="transit_company"
+                               attrs="{'readonly': [('state', '=', 'done')], 'invisible': ['|' ,'|' ,('state', 'not in', ['assigned','done']),('picking_type_code', '!=', 'internal'),('is_transit_stage', '=', False)]}"/>
+                    </group>
+
+                </xpath>
+                <xpath expr="//button[last()]" position="after">
+                    <button name="action_in_transit" type="object" string="InTransit"
+                            attrs="{'invisible': ['|' ,'|' ,'|' ,('is_transit_stage', '=', False),('state', '!=', 'assigned'),('picking_type_code', '!=', 'internal'),('transit_type', '=', 'InTransit')]}"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="vpicktree" model="ir.ui.view">
+            <field name="name">stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[last()]" position="after">
+                    <field name="transit_type"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

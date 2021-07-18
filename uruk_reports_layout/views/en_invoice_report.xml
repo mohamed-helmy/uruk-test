@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_new" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <tr>
+                <div t-if="o.partner_id.name">
+                    <strong>Customer:
+                    </strong>
+                    <span class="m-0" t-field="o.partner_id.name"/>
+
+                </div>
+                <br></br>
+                <br></br>
+
+            </tr>
+
+        </xpath>
+    </template>
+
+</odoo>

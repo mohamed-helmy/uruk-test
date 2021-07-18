@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="usool_report_arabic_invoice">
+
+
+
+
+
+        <t t-name="uruk_reports_layout.usool_report_arabic_invoice">
+
+
+
+            <t t-call="web.html_container">
+
+                <t t-foreach="docs" t-as="doc">
+
+                    <t t-call="uruk_reports_layout.usool_layout_standard">
+
+
+
+                        <style type="text/css">
+
+                                            @font-face {
+
+                                            font-family: 'AdobeArabic';
+
+                                            src: local('AdobeArabic'), local('AdobeArabic'),
+
+                                            url(/uruk_reports_layout/static/fonts/usool-fonts/AdobeArabic-Regular.otf) format('truetype');
+
+                                            }
+
+        
+
+                                            * {
+
+                                            font-family: AdobeArabic ;
+
+                                            
+
+                                            }
+
+                                            </style>
+
+
+
+                        <style type="text/css">
+
+                                                @font-face {
+
+                                                font-family: 'Cairo';
+
+                                                src: local('Cairo'), local('Cairo'),
+
+                                                url(/uruk_reports_layout/static/fonts/usool-fonts/Cairo-Bold.ttf) format('truetype');
+
+                                                }
+
+        
+
+                                                th {
+
+                                                font-family: Cairo !important ;
+
+                                                
+
+                                                }
+
+                                                
+
+                                                strong {
+
+                                                    font-family: Cairo !important ;
+
+                                                    
+
+                                                    }
+
+                                                strong span {
+
+                                                    font-family: Cairo !important ;
+
+                                                    
+
+                                                    }
+
+
+
+
+
+                                                     .table-bordered th, .table-bordered td {
+
+                                                        border: 1px solid #F7CAAC;
+
+                                                    }
+
+                                                </style>
+
+
+
+
+
+                        <div class="page">
+
+
+
+
+
+                            <img style="
+
+                              position: absolute;
+
+                                top: 0px;
+
+                                right: 0px;
+
+                                z-index: -10;
+
+                                height:1000px;
+
+                                width:600px;
+
+            
+
+                              " src='/uruk_reports_layout/static/img/water-mark.png'></img>
+
+                              <div class="wrapper_new" style="min-height:40px"> </div>
+
+                            <table style="width : 100%;text-align : right">
+
+                                <tr>
+
+                                    <td style="width : 50%" class="text-right">
+
+                                        <span style="font-size:25px" t-field="doc.name" />
+
+                                        <b style="font-size:25px">: فاتورة مبيعات</b>
+
+                                    </td>
+
+
+
+                                    <td style="width : 50%">
+
+
+
+                                        <b style="font-size:25px">:  اسم الزبون</b>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td></td>
+
+                                    <td>
+
+                                        <span style="font-size:25px" t-field="doc.partner_id.name" />
+
+
+
+                                    </td>
+
+
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="width : 50%" class="text-right"></td>
+
+
+
+                                    <td style="width : 50%">
+
+                                        <b style="font-size:25px">: موقع التوصيل</b>
+
+
+
+                                        <div style="font-size:25px" t-field="doc.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' />
+
+
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+
+
+                            <br />
+
+
+
+                            <table style="width : 100%;text-align : right">
+
+                                <tr>
+
+                                    <td style="width : 50%" class="text-right"></td>
+
+
+
+                                    <td style="width : 50%">
+
+                                        <span style="font-size:24px" t-field="doc.invoice_payment_term_id.name" />
+
+
+
+                                        <span style="font-size:24px">: طريقة الدفع</span>
+
+
+
+                                    </td>
+
+                                </tr>
+
+
+
+                                <tr>
+
+                                    <td style="width : 50%" class="text-right"></td>
+
+
+
+
+
+                                    <td style="width : 50%">
+
+                                        <span style="font-size:24px" t-field="doc.invoice_date" />
+
+                                        <span style="font-size:24px">: تاريخ الاصدار</span>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="width : 50%" class="text-right"></td>
+
+
+
+                                    <td style="width : 50%">
+
+                                        <span style="font-size:24px" t-field="doc.invoice_date_due" class="text-right" />
+
+                                        <span style="font-size:24px">: تاريخ الاستحقاق</span>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+
+
+
+
+                            <table class="table table-bordered mb32" style="table-layout:auto;direction: rtl;">
+
+                                <thead>
+
+
+
+
+
+                                    <tr>
+
+                                        <th style="background-color:#FFE599" name="th_description" class="text-center">ت
+
+                                            </th>
+
+                                        <th style="background-color:#FFE599" name="th_part_no" class="text-center">رمز
+
+                                                المادة
+
+                                            </th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">وصف المادة
+
+                                            </th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">الكمية</th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">الوحدة</th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">السعر</th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">الاجمالى</th>
+
+
+
+
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody class="sale_tbody">
+
+                                    <t t-set="count" t-value="0" />
+
+
+
+                                    <t t-set="current_subtotal" t-value="0" />
+
+
+
+                                    <t t-foreach="doc.invoice_line_ids" t-as="line">
+
+
+
+
+
+                                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+
+                                            <t t-if="not line.display_type">
+
+
+
+                                                <t t-set="count" t-value="count+1" />
+
+
+
+                                                <td class="text-center">
+
+                                                    <span t-esc="count" />
+
+                                                </td>
+
+                                                <td name="td_code" class="text-center">
+
+                                                    <span t-field="line.product_id.default_code" />
+
+                                                </td>
+
+
+
+
+
+                                                <td name="td_name" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.name" />
+
+                                                </td>
+
+                                                <td name="td_qty" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.quantity" />
+
+                                                </td>
+
+                                                <td name="td_uom" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.product_uom_id.name" />
+
+                                                </td>
+
+                                                <td name="td_price" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.price_unit" />
+
+                                                </td>
+
+                                                <td name="td_tot" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.price_subtotal" />
+
+                                                </td>
+
+
+
+                                            </t>
+
+                                            <t t-if="line.display_type == 'line_section'">
+
+                                                <td name="td_section_line" colspan="99">
+
+                                                    <span style="font-size:20px" t-field="line.name" />
+
+                                                </td>
+
+                                                <t t-set="current_section" t-value="line" />
+
+                                                <t t-set="current_subtotal" t-value="0" />
+
+                                            </t>
+
+                                            <t t-if="line.display_type == 'line_note'">
+
+                                                <td name="td_note_line" colspan="99">
+
+                                                    <span style="font-size:20px" t-field="line.name" />
+
+                                                </td>
+
+                                            </t>
+
+                                        </tr>
+
+
+
+                                    </t>
+
+                                    <tr>
+
+                                        <td style="border-right:0px"></td>
+
+
+
+
+
+                                        <td colspan="5" style="width : 60%;text-align:right">
+
+                                            <span style="font-size:20px">الاجمالى الكلى:</span>
+
+
+
+                                        </td>
+
+                                        <td style="width : 30% ; font-size:20px" class="text-center">
+
+                                            <span t-field="doc.amount_total" />
+
+
+
+                                        </td>
+
+                                    </tr>
+
+
+
+                                <tr>
+
+
+
+                                    <td colspan="12" style="width : 100%;background-color:#FFE599">
+
+                                        <strong>
+
+                                            <span t-esc="doc.amount_to_text(doc.amount_total)" />
+
+                                        </strong>
+
+
+
+                                    </td>
+
+                                </tr>
+
+
+
+                                </tbody>
+
+                            </table>
+
+
+
+
+
+
+
+                            <br />
+
+                            <table style="width : 100%;text-align : right">
+
+                                <tr>
+
+
+
+                                    <td style="width : 30%">
+
+                                        <strong style="font-size:22px">: تفاصيل البنك</strong>
+
+                                    </td>
+
+
+
+                                    <br />
+
+
+
+
+
+                                </tr>
+
+                                <tr>
+
+
+
+
+
+                                    <td style="width : 30%">
+
+                                        <span style="font-size:21px" t-field="doc.partner_id.default_payment_method_id.bank_id" />
+
+
+
+                                        <span style="font-size:21px">
+
+                                                : اسم البنك
+
+                                            </span>
+
+
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+
+
+
+
+                                    <td style="width : 30%">
+
+                                        <span style="font-size:18px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.swift"/>
+
+
+
+                                        <span style="font-size:21px">
+
+                                                : SWIFT
+
+                                            </span>
+
+
+
+
+
+                                    </td>
+
+                                </tr>
+
+
+
+                                <tr>
+
+
+
+
+
+                                    <td style="width : 30%">
+
+
+
+                                        <span style="font-size:21px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.acc_number" />
+
+                                        <span style="font-size:21px">
+
+                                                : رقم الحساب
+
+                                            </span>
+
+
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+
+
+
+
+                                    <td style="width : 30%">
+
+                                        <span style="font-size:21px">
+
+                                                الاسم كامل:
+
+                                            </span>
+
+
+
+                                        <span style="font-size:21px">
+
+                                                شركة الأصول للتجارة العامة المحدودة
+
+                                            </span>
+
+                                        <br />
+
+                                        <span t-field="doc.company_id.street" />
+
+
+
+                                        <span t-field="doc.company_id.street2" t-if="doc.company_id.street2" />
+
+
+
+                                        <span t-field="doc.company_id.city" />
+
+                                        <span t-field="doc.company_id.state_id" />
+
+                                        <span t-field="doc.company_id.zip" />
+
+
+
+                                        <span t-field="doc.company_id.country_id" />
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="width : 30%">
+
+                                        <span style="font-size:21px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.iban_no"/>
+
+
+
+
+
+                                        <span style="font-size:21px">
+
+                                                : IBAN NO
+
+                                            </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+                            <br />
+
+                            <div class="text-right">
+
+                                <span style="font-size:22px">
+
+                                        شكرا لكم على العمل.
+
+                                 </span>
+
+                            </div>
+
+
+
+                            <div class="text-left">
+
+                                <strong style="font-size:22px">
+
+                                        التوقيع والختم
+
+                                    </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </t>
+
+                </t>
+
+            </t>
+
+        </t>
+
+
+
+
+
+    </template>
+
+    <report id="usool_arabic_print" string="فاتورة أصول" model="account.move" report_type="qweb-pdf" name="uruk_reports_layout.usool_report_arabic_invoice" file="uruk_reports_layout.usool_report_arabic_invoice" print_report_name="'Invoice - %s' % (object.name).replace('/', '')" />
+
+</odoo>

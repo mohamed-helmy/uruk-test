@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.rule" id="sales_target_multi_company_rule">
+        <field name="name">Sales Target : multi-company</field>
+        <field name="model_id" ref="ejaf_sales_target.model_sale_target" />
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!--<record id="salesman_target_rule" model="ir.rule">-->
+        <!--<field name="name">Salesman see his own sale targets only</field>-->
+        <!--<field name="model_id" ref="ejaf_sales_target.model_sale_target" />-->
+        <!--<field name="groups" eval="[(4,ref('sales_team.group_sale_salesman'))]" />-->
+        <!--<field name="domain_force">[('state','=','open'),('sales_person_id','=',user.id), ('company_id','=', user.company_id.id)]-->
+        <!--</field>-->
+    <!--</record>-->
+
+    <!--<record id="sales_manager_target_rule" model="ir.rule">-->
+        <!--<field name="name">Sale Manager see All Sales Target</field>-->
+        <!--<field name="model_id" ref="ejaf_sales_target.model_sale_target" />-->
+        <!--<field name="groups" eval="[(4,ref('sales_team.group_sale_manager'))]" />-->
+        <!--<field name="domain_force">[(1,'=', 1)]-->
+        <!--</field>-->
+    <!--</record>-->
+
+    <record id="sales_target_user_rule" model="ir.rule">
+        <field name="name">Sales Target see his own targets</field>
+        <field name="model_id" ref="ejaf_sales_target.model_sale_target" />
+        <field name="groups" eval="[(4,ref('ejaf_sales_target.group_sales_target_user'))]" />
+        <field name="domain_force">['|', ('sales_person_id','=',user.id), ('responsible_id','=', user.id)]
+        </field>
+    </record>
+
+
+    <record id="sales_target_manager_rule" model="ir.rule">
+        <field name="name">Sales Target Administrator See All Targets</field>
+        <field name="model_id" ref="ejaf_sales_target.model_sale_target" />
+        <field name="groups" eval="[(4,ref('ejaf_sales_target.group_sales_target_administrator'))]" />
+        <field name="domain_force">[(1,'=', 1)]
+        </field>
+    </record>
+
+    <record id="customers_compnay_rule" model="ir.rule">
+        <field name="name">Each Company see own customers only</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="domain_force">['|', ('company_id','=', user.company_id.id),('company_id','=', False)]
+        </field>
+    </record>
+
+</odoo>

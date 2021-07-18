@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="module_category_mutli_scrap" model="ir.module.category">
+            <field name="name">Multi Scrap</field>
+            <field name="sequence" eval="100"/>
+            <field name="description">Helps you Manage your Multi Scrap Orders.
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

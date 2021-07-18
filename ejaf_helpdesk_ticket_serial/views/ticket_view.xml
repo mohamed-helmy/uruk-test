@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="helpdesk_ticket_view_form" model="ir.ui.view">
+            <field name="name">helpdesk.ticket</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@class='oe_title']/h1" position="before">
+                    <h1>
+                        <field name="sequence" readonly="1"/>
+                    </h1>
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="lot_id"/>
+                    <!--<field name="lot_tag_id"/>-->
+                    <field name="solved_date"/>
+                    <field name="counter_reading_mono"/>
+                    <field name="counter_reading_color"/>
+                    <field name="response_time"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="helpdesk_ticket_view_form_inherit_helpdesk_invoicing" model="ir.ui.view">
+            <field name="name">helpdesk.ticket</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk_sale.helpdesk_ticket_view_form_inherit_helpdesk_invoicing"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='sale_order_id']" position="after">
+                    <field name="product_id" />
+                    <field name="picking_id"/>
+                    <field name="customer_location_id"/>
+                    <field name="sold_date"/>
+                    <field name="warranty_date"/>
+                    <field name="warranty_terms"/>
+                    <field name="effective_date"/>
+                    <field name="service_contract_id"/>
+                    <field name="contract_expiry_date"/>
+                    <label for="sla_resolution_time"/>
+                    <div id="sla_resolution_time">
+                        <field name="sla_resolution_time" widget="float_time" class="oe_inline"/> Hours
+                    </div>
+                    <label for="sla_response_time"/>
+                    <div id="sla_response_time">
+                        <field name="sla_response_time" widget="float_time" class="oe_inline"/> Hours
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="helpdesk_ticket_view_kanban" model="ir.ui.view">
+            <field name="name">helpdesk.ticket</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_kanban"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="partner_name"/>
+                </xpath>
+                <xpath expr="//div[@class='oe_kanban_content']/div[3]" position="after">
+                    <div>
+                        <field name="partner_name"/>
+                    </div>
+
+                    <div>
+                        <field name="product_id"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="helpdesk_tickets_view_tree" model="ir.ui.view">
+            <field name="name">helpdesk.ticket</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <field name="sla_resolution_time" optional="show"/>
+                    <field name="sla_response_time" optional="show"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='production_lot_info']/div[@class='col-12 col-lg-6 o_setting_box'][last()]" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="track_serial_sales_only_div" attrs="{'invisible': [('group_stock_production_lot', '=', False)]}" >
+                    <div class="o_setting_left_pane">
+                        <field name="track_serial_sales_only"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="track_serial_sales_only"/>
+                        <div class="text-muted">
+                             It means that we will receive without serial no in any picking except delivery(sales)
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

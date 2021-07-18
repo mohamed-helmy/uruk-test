@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="report_english_invoice">
+
+
+
+                <t t-name="uruk_reports_layout.report_english_invoice">
+
+                    <t t-call="web.html_container">
+
+                        <t t-foreach="docs" t-as="doc">
+
+                            <div class="header">
+
+        
+
+                                <style type="text/css">
+
+                                @font-face {
+
+                                    font-family: 'Rajdhani';
+
+                                    src: local('Rajdhani'), local('Rajdhani'),
+
+                                    url(/uruk_reports_layout/static/fonts/uruk-fonts/Rajdhani-Regular.ttf) format('truetype');
+
+                                    }
+
+                            
+
+                                    * {
+
+                                    font-family: Rajdhani !important;
+
+                            
+
+                                    }
+
+                                </style>
+
+        
+
+        
+
+                                <style>
+
+                           
+
+                          
+
+                                
+
+                                .header{
+
+                                font-family: Rajdhani !important;
+
+                                }
+
+                                
+
+                                
+
+                                .line {
+
+                                      border-bottom: 2px solid #727376;
+
+                                      position: absolute;
+
+                                      top: 120px;
+
+                                      left: 23px;
+
+                                      width: 600px;
+
+                                  }
+
+                                        
+
+                                  .h-line {
+
+                                      border-right: 2px solid #727376;
+
+                                      position: absolute;
+
+                                      left: 87px;
+
+                                      height: 50px;
+
+                                      top: 72px;
+
+                                  }
+
+                                  
+
+                                  .h1-line {
+
+                                      border-right: 2px solid #727376;
+
+                                      position: absolute;
+
+                                      left: 23px;
+
+                                      height: 36px;
+
+                                      top: 120px;
+
+                                  }
+
+                                  
+
+                                .h2-line {
+
+                                    position: absolute;
+
+                                    left: 648px;
+
+                                    transform: rotate(-129deg);
+
+                                    -ms-transform: rotate(-129deg);
+
+                                    -webkit-transform: rotate(-129deg);
+
+                                    border-right: 2px solid #727376;
+
+                                
+
+                                    height: 66px;
+
+                                    top: 67px;
+
+                                }
+
+        
+
+                                </style>
+
+        
+
+        
+
+        
+
+                                <div style="position: absolute; top:-10px ; right:0px;">
+
+                                    <h1>Invoice</h1>
+
+                              
+
+                                </div>
+
+                                     <h2 style="position: absolute; top:28px ; right:0px;" t-field="doc.name"/>
+
+                                    <h6  style="position: absolute; top:62px ; right:4px;text-align: end; font-size:12px;width:200px">TAX Identification No.: 9O01781O7</h6>
+
+        
+
+        
+
+                                <div>
+
+        
+
+        
+
+                                    <h7 style="position: absolute;  top:67px; left:23px; font-size:11px ; color:black"> Head Office</h7>
+
+        
+
+                                    <h7 style="position: absolute; top:81px; left:23px; font-size:11px; color:black"> Erbil Office </h7>
+
+        
+
+                                    <h7 style="position: absolute; top:95px; left:23px; font-size:11px; color:black"> Basra Office </h7>
+
+        
+
+        
+
+                                    <h7 style="position: absolute;  top:67px; left:110px; font-size:11px ; color:black">
+
+                                  Al-Mansour, District 609, Street 1, Building 25 P0 Box 50300, Baghdad, IRAQ | +964 (0) 781 370 4954 | ifno@urukco.com
+
+                                    </h7>
+
+                                    <h7 style="position: absolute; top:81px; left:110px; font-size:11px; color:black"> 
+
+                                        100m Street, Italian Village 1, Building No, 27A, Erbil, Kurdistan Region of Iraq | +964 (0) 750 811 8000
+
+                                    </h7>
+
+                                    <h7 style="position: absolute; top:95px; left:110px; font-size:11px; color:black">
+
+                                Kornish Str., Shat Al-Arab Building Besides Sheraton International Hotel. Basra, Iraq | +964 (0) 780 926 7818
+
+                                    </h7>
+
+        
+
+        
+
+                                    <div class="line"/>
+
+                                    <div class="h2-line"/>
+
+                                    <div class="h-line"/>
+
+                                    <div style="z-index:-10" class="h1-line"/>
+
+                                    <img style="width: 150px;" src="/uruk_reports_layout/static/img/logo.png"/>
+
+        
+
+        
+
+                                </div>
+
+        
+
+        
+
+                            </div>
+
+        
+
+        
+
+        
+
+                            <div class="article o_report_layout_standard">
+
+        
+
+        
+
+                                <style>
+
+                                      
+
+            
+
+                                .table thead th {
+
+                                    vertical-align: bottom;
+
+                                    border-bottom: 2px solid #727376;
+
+                                    border-right: 2px solid #727376;
+
+                                    border-left: 2px solid #727376;
+
+                                }
+
+                                
+
+                                
+
+                                .table th, .table td {
+
+                                    padding: 0.75rem;
+
+                                    vertical-align: top;
+
+                                    border-top: 2px solid #727376;
+
+                                
+
+                                    border-bottom: 2px solid #727376;
+
+                                    border-right: 2px solid #727376;
+
+                                    border-left: 2px solid #727376;
+
+                                }
+
+                                                        
+
+                                
+
+          
+
+                                </style>
+
+                                
+
+                            <style type="text/css">
+
+                                @font-face {
+
+                                    font-family: 'Rajdhani';
+
+                                    src: local('Rajdhani'), local('Rajdhani'),
+
+                                    url(/uruk_reports_layout/static/fonts/uruk-fonts/Rajdhani-Regular.ttf) format('truetype');
+
+                                    }
+
+                            
+
+                                    * {
+
+                                    font-family: Rajdhani !important;
+
+                            
+
+                                    }
+
+                                </style>
+
+        
+
+                                <div style="position: absolute; height:1233px;border-right: 2px solid #727376; left: 28px;top: 0px;"/>
+
+        
+
+        
+
+                                <div class="page" style="padding-left:25px; padding-bottom:100px">
+
+                                    <div class="row text-left" id="informations">
+
+                                        <div class="col-6 text-left">
+
+                                            <strong class="h1-title" style="font-size:30px">
+
+                                                <b>Invoice To :</b>
+
+                                            </strong>
+
+                                            <p style="font-size:18px" class="m-0" t-field="doc.partner_id.name"/>
+
+                                        </div>
+
+        
+
+                                        <div t-if="doc.partner_shipping_id" class="col-8">
+
+                                            <strong class="h1-title" style="font-size:30px">
+
+                                                <b>Ship To :</b>
+
+                                            </strong>
+
+                                            <div t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+
+                                        </div>
+
+                                    </div>
+
+                                    <br/>
+
+                                    <br/>
+
+                                    <br/>
+
+        
+
+        
+
+        
+
+                                    <div class="row" style="text-align: left; position: absolute; top:130px ;  left:55px;">
+
+                                        <p style="text-align: left; position: absolute;  left:225px; top:4px" t-field="doc.invoice_payment_term_id.name"/>
+
+                                        <h4 style="text-align: left; position: absolute;  left:185px; top:4px">
+
+                                            <strong> : </strong>
+
+                                        </h4>
+
+                                        <h5 style="width:1000px">
+
+                                            <strong>  PAYMENT TERMS </strong>
+
+                                        </h5>
+
+                                    </div>
+
+        
+
+        
+
+                                    <div class="row" style="text-align: left; position: absolute ; top:160px ;   left:40px;">
+
+                                        <div class="col-12">
+
+                                            <p style="text-align: left; position: absolute;  left:240px; top:4px" t-field="doc.invoice_date"/>
+
+                                            <h4 style="text-align: left; position: absolute;  left:200px; top:4px">
+
+                                                <strong> : </strong>
+
+                                            </h4>
+
+                                            <h5 style="width:1000px">
+
+                                                <strong> ISSUE DATE  </strong>
+
+                                            </h5>
+
+                                        </div>
+
+                                    </div>
+
+        
+
+        
+
+                                    <div class="row" style="text-align: left; position: absolute ; top:190px ;   left:40px;">
+
+                                        <div class="col-12">
+
+                                            <p style="text-align: left; position: absolute;  left:240px; top:4px" t-field="doc.invoice_date_due"/>
+
+                                            <h4 style="text-align: left; position: absolute;  left:200px; top:4px">
+
+                                                <strong> : </strong>
+
+                                            </h4>
+
+                                            <h5 style="width:1000px">
+
+                                                <strong>   DUE DATE </strong>
+
+                                            </h5>
+
+                                        </div>
+
+                                    </div>
+
+        
+
+        
+
+                                    <div class="row" style="text-align: left; position: absolute ; top:220px ;   left:40px;">
+
+                                        <div class="col-12">
+
+                                            <p style="text-align: left; position: absolute;  left:240px; top:4px" t-field="doc.ref"/>
+
+                                            <h4 style="text-align: left; position: absolute;  left:200px; top:4px">
+
+                                                <strong> : </strong>
+
+                                            </h4>
+
+                                            <h5 style="width:1000px">
+
+                                                <strong>CUSTOMER REF </strong>
+
+                                            </h5>
+
+                                        </div>
+
+                                    </div>
+
+        
+
+                                    <br/>
+
+                                    <br/>
+
+                                    <br/>
+
+                                    <br/>
+
+                                    <br/>
+
+                                    <br/>
+
+                                    <br/>
+
+                                    
+
+                                    <table class="table  mb32" style="table-layout:auto padding-right:1px; margin-left: -12px;">
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th name="th_description" class="text-center">NO.</th>
+
+                                                <th name="th_quantity" class="text-center">CODE</th>
+
+                                                <th name="th_part_no" class="text-center">PART NO.</th>
+
+                                                <th name="th_des" class="text-center">DESCRIPTION</th>
+
+                                                <th name="th_des" class="text-center">QTY</th>
+
+                                                <th name="th_des" class="text-center">UOM</th>
+
+                                                <th name="th_des" class="text-center">RATE</th>
+
+                                                <th name="th_des" class="text-center">TOTAL</th>
+
+        
+
+        
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody class="sale_tbody">
+
+                                            <t t-set="count" t-value="0"/>
+
+        
+
+                                            <t t-set="current_subtotal" t-value="0"/>
+
+        
+
+                                            <t t-foreach="doc.invoice_line_ids" t-as="line">
+
+        
+
+        
+
+                                                <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+
+                                                    <t t-if="not line.display_type">
+
+        
+
+                                                        <t t-set="count" t-value="count+1"/>
+
+        
+
+                                                        <td class="text-center">
+
+                                                            <span t-esc="count"/>
+
+                                                        </td>
+
+        
+
+                                                        <td name="td_barcode" class="text-center">
+
+                                                            <span t-field="line.barcode"/>
+
+                                                        </td>
+
+                                                        <td name="td_code" class="text-center">
+
+                                                            <span t-field="line.product_id.default_code"/>
+
+                                                        </td>
+
+                                                        <td name="td_name" class="text-center">
+
+                                                            <span t-field="line.name"/>
+
+                                                        </td>
+
+                                                        <td name="td_qty" class="text-center">
+
+                                                            <span t-field="line.quantity"/>
+
+                                                        </td>
+
+                                                        <td name="td_uom" class="text-center">
+
+                                                            <span t-field="line.product_uom_id.name"/>
+
+                                                        </td>
+
+                                                        <td name="td_price" class="text-center">
+
+                                                            <span t-field="line.price_unit"/>
+
+                                                        </td>
+
+                                                        <td name="td_tot" class="text-center">
+
+                                                            <span t-field="line.price_subtotal"/>
+
+                                                        </td>
+
+        
+
+                                                    </t>
+
+                                                    <t t-if="line.display_type == 'line_section'">
+
+                                                        <td name="td_section_line" colspan="99">
+
+                                                            <span t-field="line.name"/>
+
+                                                        </td>
+
+                                                        <t t-set="current_section" t-value="line"/>
+
+                                                        <t t-set="current_subtotal" t-value="0"/>
+
+                                                    </t>
+
+                                                    <t t-if="line.display_type == 'line_note'">
+
+                                                        <td name="td_note_line" colspan="99">
+
+                                                            <span t-field="line.name"/>
+
+                                                        </td>
+
+                                                    </t>
+
+                                                </tr>
+
+        
+
+                                            </t>
+
+        
+
+        
+
+                                            <tr style="border:0px">
+
+                                                <td colspan="5" style="border:0px">
+
+        
+
+        
+
+                                                    <span style="border:0px !important" t-esc="doc.amount_to_text(doc.amount_total)"/>
+
+        
+
+                                                </td>
+
+                                                <td style="border:0px"/>
+
+                                                <td style="border:0px"/>
+
+                                             
+
+                                                <td>
+
+                                                    <strong>
+
+        
+
+        
+
+                                                        <span t-field="doc.amount_total"/>
+
+                                                    </strong>
+
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+
+        
+
+        
+
+        
+
+                                    </table>
+
+        
+
+        
+
+                                    <table style="width : 100%;text-align : left; margin-left:10px">
+
+                                        <tr>
+
+        
+
+                                            <td style="width : 30%">
+
+                                                <strong style="font-size:22px">BANK DETAILS :</strong>
+
+                                            </td>
+
+                                            <br/>
+
+                                            <br/>
+
+        
+
+        
+
+                                        </tr>
+
+                                        <tr>
+
+        
+
+        
+
+                                            <td style="width : 100%">
+
+                                                <span style="font-size:18px">
+
+                                                Account Name :
+
+                                                </span>
+
+        
+
+                                                <span style="font-size:18px" t-field="doc.partner_id.default_payment_method_id.bank_account_id"/>
+
+        
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+        
+
+        
+
+                                            <td style="width : 100%">
+
+                                                <span style="font-size:18px">
+
+                                                Bank Name :
+
+                                                </span>
+
+        
+
+                                                <span style="font-size:18px" t-field="doc.partner_id.default_payment_method_id.bank_id"/>
+
+        
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+        
+
+        
+
+                                            <td style="width : 100%">
+
+                                                <span style="font-size:18px">
+
+                                                Account NO. :
+
+                                                </span>
+
+        
+
+                                                <span style="font-size:18px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.acc_number"/>
+
+        
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+        
+
+        
+
+                                            <td style="width : 100%">
+
+                                                <span style="font-size:18px">
+
+                                                SWIFT :
+
+                                                </span>
+
+        
+
+                                                <span style="font-size:18px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.swift"/>
+
+        
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+                                    <br/>
+
+                                    <br/>
+
+                                    <br/>
+
+                                    <div class="text-left" style="margin-left:25px !important">
+
+                                        <strong style="font-size:22px">
+
+                                        SignatureAnd Stamp
+
+                                        </strong>
+
+                                    </div>
+
+        
+
+        
+
+                                </div>
+
+        
+
+                            </div>
+
+        
+
+        
+
+        
+
+        
+
+        
+
+                            <div class="footer">
+
+        
+
+                                <style>
+
+                        
+
+                        
+
+                           @font-face {
+
+                                font-family: 'Sans_Arabic';
+
+                                src: local('Sans_Arabic'), local('Sans_Arabic'),
+
+                                url(/uruk_reports_layout/static/fonts/uruk-fonts/Neo_Sans_Arabic_Regular.ttf) format('truetype');
+
+                                }
+
+        
+
+                                * {
+
+                                font-family: Sans_Arabic !important;
+
+        
+
+                                }
+
+                            
+
+              
+
+                                    .footer-line {
+
+                                
+
+                                    position: absolute;
+
+                                    border-right: 2px solid #727376;
+
+                                    height: 80px;
+
+                                    transform: matrix;
+
+                                    transform: rotate(-37deg);
+
+                                    -ms-transform: rotate(-37deg);
+
+                                    -webkit-transform: rotate(-37deg);
+
+                                    top: -22px;
+
+                                    left: 37px;
+
+                                    
+
+                                    }
+
+                                    
+
+                                    .footer-div{
+
+                                    position:absoulte;
+
+                                    top:0px;
+
+                                    }
+
+        
+
+                                  @font-face {
+
+                                    font-family: 'Rajdhani';
+
+                                    src: local('Rajdhani'), local('Rajdhani'),
+
+                                    url(/uruk_reports_layout/static/fonts/uruk-fonts/Rajdhani-Regular.ttf) format('truetype');
+
+                                    }
+
+                            
+
+                                    .iso {
+
+                                    font-family: Rajdhani !important;
+
+                            
+
+                                    }
+
+                                </style>
+
+        
+
+                                <div class="footer-line"/>
+
+        
+
+        
+
+                                <h7 style="position: absolute; top:50px; left:80px; font-size:11px; color:black">
+
+                                شركة مسجلة في العراق برأس مال مدفوع وقدره ملياران ومليوني دينار عراقي
+
+                                </h7>
+
+        
+
+                                <h7 class="iso" style="position: absolute; top:65px; left:80px; font-size:11px; color:black">
+
+                                ISO 9001:2015 Certified.
+
+                                </h7>
+
+                            </div>
+
+                    </t>
+
+                </t>
+
+        
+
+        
+
+            </t>
+
+            
+
+    </template>
+
+    <report id="invoice_english_print" string="Uruk Invoice" model="account.move" report_type="qweb-pdf" name="uruk_reports_layout.report_english_invoice" file="uruk_reports_layout.report_english_invoice" print_report_name="'Invoice - %s' % (object.name).replace('/', '')" />
+
+</odoo>
+

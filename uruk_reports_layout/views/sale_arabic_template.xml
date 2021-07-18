@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_arabic_saleorder">
+
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="uruk_reports_layout.arabic_external_layout">
+                    <t t-set="address">
+                        <div t-field="doc.partner_id"
+                             t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+                        <p t-if="doc.partner_id.vat"><t t-esc="doc.company_id.country_id.vat_label or 'Tax ID'"/>:
+                            <span t-field="doc.partner_id.vat"/>
+                        </p>
+                    </t>
+
+                                           <style type="text/css">
+
+                        @font-face {
+                        font-family: 'Sans_Arabic';
+                        src: local('Sans_Arabic'), local('Sans_Arabic'),
+                        url(/uruk_reports_layout/static/fonts/uruk-fonts/Neo_Sans_Arabic_Regular.ttf) format('truetype');
+                        }
+
+                        * {
+                        font-family: Sans_Arabic !important;
+                        
+                        }
+                        </style>
+                         <style>
+                    .vl {
+                    position: absolute;
+                    top: 0px;
+                    left: 800px;
+                    border-left: 2px solid #e5e5e6;;
+                    height: 1000px;
+                    }
+                    </style>
+
+                    <div class="vl"/>
+
+                    <div class="page" style="padding-right:200px">
+
+                        <div class="oe_structure"/>
+
+                        <h2 class="mt16 text-right">
+                            <span t-field="doc.name"/>
+
+                            <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+                                <span t-if="doc.state not in ['draft','sent']">أمر بيع #</span>
+                                <span t-if="doc.state in ['draft','sent']">سعر بيع #</span>
+                            </t>
+                        </h2>
+
+                        <div class="row text-right" id="informations">
+                            <div t-if="doc.date_order" class="col-4">
+                                <strong>تاريخ الأمر:</strong>
+                                <p class="m-0" t-field="doc.date_order"/>
+                            </div>
+                            <div t-if="doc.validity_date and doc.state in ['draft', 'sent']" class="col-4"
+                                 name="expiration_date">
+                                <strong>تاريخ الانتهاء:</strong>
+                                <p class="m-0" t-field="doc.validity_date"/>
+                            </div>
+                            <div t-if="doc.user_id.name" class="col-4">
+                                <strong>موظف المبيعات:</strong>
+                                <p class="m-0" t-field="doc.user_id"/>
+                            </div>
+                        </div>
+
+                        <!-- Is there a discount on at least one line? -->
+                        <t t-set="display_discount" t-value="any([l.discount for l in doc.order_line])"/>
+
+                        <table class="table table-sm o_main_table text-right">
+                            <thead>
+                                <tr>
+                                    <th name="th_subtotal" class="text-right">
+                                        <t groups="account.group_show_line_subtotals_tax_excluded">الاجمالي</t>
+                                        <t groups="account.group_show_line_subtotals_tax_included">ألسعر الكلي</t>
+                                    </th>
+                                    <th name="th_taxes" class="text-right">الضرائب</th>
+                                    <th name="th_discount" t-if="display_discount" class="text-right"
+                                        groups="product.group_discount_per_so_line">
+                                        <span>الخصم.%</span>
+                                    </th>
+                                    <th name="th_priceunit" class="text-right">
+                                        <!--<t t-if="not doc.is_consider_quoted">-->
+                                            <span>سعر الوحدة</span>
+                                        <!--</t>-->
+                                    </th>
+                                    <th name="th_quantity" class="text-right">الكمية</th>
+                                    <th name="th_description" class="text-right">الوصف</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody class="sale_tbody">
+
+                                <t t-set="current_subtotal" t-value="0"/>
+
+                                <t t-foreach="doc.order_line" t-as="line">
+
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                                       groups="account.group_show_line_subtotals_tax_excluded"/>
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                                       groups="account.group_show_line_subtotals_tax_included"/>
+
+                                    <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                        <t t-if="not line.display_type">
+                                            <td name="td_subtotal" class="text-right">
+
+                                                <!--<t t-if="doc.is_consider_quoted">-->
+                                                    <!--<span t-field="line.quoted_state"/>-->
+                                                <!--</t>-->
+                                                <!--<t t-else="">-->
+                                                    <span t-field="line.price_subtotal"
+                                                          groups="account.group_show_line_subtotals_tax_excluded"/>
+                                                    <span t-field="line.price_total"
+                                                          groups="account.group_show_line_subtotals_tax_included"/>
+
+                                                <!--</t>-->
+                                            </td>
+                                            <td name="td_taxes" class="text-right">
+                                                <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_id))"/>
+                                            </td>
+                                            <td t-if="display_discount" class="text-right"
+                                                groups="product.group_discount_per_so_line">
+                                                <span t-field="line.discount"/>
+                                            </td>
+
+
+                                            <td name="td_priceunit" class="text-right">
+                                                <!--<t t-if="doc.is_consider_quoted">-->
+                                                    <!--<span t-field="line.quoted_state"/>-->
+                                                <!--</t>-->
+                                                <!--<t t-else="">-->
+                                                    <span t-field="line.price_unit"/>
+
+                                                <!--</t>-->
+                                            </td>
+
+                                            <td name="td_quantity" class="text-right">
+                                                <span t-field="line.product_uom_qty"/>
+                                                <span t-field="line.product_uom" groups="uom.group_uom"/>
+                                            </td>
+                                            <td name="td_name">
+                                                <span t-field="line.name"/>
+                                            </td>
+
+                                        </t>
+                                        <t t-if="line.display_type == 'line_section'">
+                                            <td name="td_section_line" colspan="99">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <t t-set="current_section" t-value="line"/>
+                                            <t t-set="current_subtotal" t-value="0"/>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_note'">
+                                            <td name="td_note_line" colspan="99">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="clearfix" name="so_total_summary">
+                            <div id="total" class="row" name="total">
+                                <div class="col-4 text-right">
+                                    <table class="table table-sm">
+                                        <tr class="border-black o_subtotal" style="">
+                                            <td name="td_amount_untaxed" class="text-right">
+
+                                                <!--<t t-if="doc.is_consider_quoted">-->
+                                                    <!--<span t-field="doc.order_line[0].quoted_state"/>-->
+                                                <!--</t>-->
+                                                <!--<t t-else="">-->
+                                                    <span t-field="doc.amount_untaxed"/>
+
+                                                <!--</t>-->
+                                            </td>
+                                            <td name="td_amount_untaxed" class="text-right">
+                                                <strong>الاجمالي الفرعي</strong>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="border-black o_total">
+
+                                            <td name="td_amount_total" class="text-right">
+
+                                                <!--<t t-if="doc.is_consider_quoted">-->
+                                                    <!--<span t-field="doc.order_line[0].quoted_state"/>-->
+                                                <!--</t>-->
+                                                <!--<t t-else="">-->
+                                                    <span t-field="doc.amount_total"/>
+
+                                                <!--</t>-->
+                                            </td>
+                                            <td name="td_amount_total_label">
+                                                <strong>الاجمالي</strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="oe_structure"/>
+
+                        <p t-field="doc.note"/>
+
+                    </div>
+                </t>
+
+            </t>
+        </t>
+    </template>
+
+    <report
+            id="sale_arabic_print"
+            string="أمر/مسودة بيع"
+            model="sale.order"
+            report_type="qweb-pdf"
+            name="uruk_reports_layout.report_arabic_saleorder"
+            file="uruk_reports_layout.report_arabic_saleorder"
+            print_report_name="'Sale - %s' % (object.name).replace('/', '')"
+    />
+
+</odoo>

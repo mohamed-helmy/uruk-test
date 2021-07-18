@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_quant_search_view_inherit" model="ir.ui.view">
+            <field name="name">stock.quant.search.view.inherit</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.quant_search_view"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="brand_id"/>
+                </field>
+                <filter name="productgroup" position="after">
+                    <filter string="Brand" name="brandgroup" context="{'group_by': 'brand_id'}"/>
+                </filter>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

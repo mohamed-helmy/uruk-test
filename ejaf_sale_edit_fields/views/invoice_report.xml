@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document_remove_tax" inherit_id="account.report_invoice_document">
+            <xpath expr="//table//thead//tr//th[@name='th_taxes']" position="replace">
+
+            </xpath>
+            <xpath expr="//table//tbody//tr//td[5]" position="replace">
+            </xpath>
+            <xpath expr="//div[@class='clearfix']" position="replace">
+                <div class="clearfix">
+                    <div id="total" class="row">
+                        <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                            <table class="table table-sm;page-break-inside: avoid;">
+                                <tr class="border-black o_subtotal" style="">
+                                    <td>
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="o.amount_untaxed"/>
+                                    </td>
+                                </tr>
+                                <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                </t>
+                                <tr class="border-black o_total">
+                                    <td>
+                                        <strong>Total</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="o.amount_total"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </xpath>
+        </template>
+
+    </data>
+
+
+</odoo>

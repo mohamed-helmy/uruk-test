@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+
+
+
+    <template id="uruk_layout_standard">
+
+
+
+        <t t-if="user.company_id.is_usool">
+
+            <div class="header">
+                <div style="width : 50% ;float : left">
+                    <img src="/uruk_reports_layout/static/img/usool_header.png" style="display : block ; width :990px;height : 180px;" alt="Logo"/>
+
+
+                </div>
+
+            </div>
+
+        </t>
+
+        <t t-else="">
+            <div class="header">
+                <div class="vl"></div>
+
+                <div style="width : 50% ;float : left">
+                    <img src="/uruk_reports_layout/static/img/uruk_en_header.png" style="display : block ; width :990px;height : 180px;" alt="Logo"/>
+
+
+                </div>
+
+            </div>
+
+        </t>
+        <br></br>
+        <br></br>
+        <br></br>
+
+
+
+
+
+
+
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-raw="0"/>
+        </div>
+
+        <t t-if="user.company_id.is_usool">
+            <div class="footer">
+                <div style="width : 50% ;float : left">
+                    <img src="/uruk_reports_layout/static/img/usool_footer.png" style="display : block ; width :900px;height : 100px;" alt="Logo"/>
+
+                </div>
+
+
+            </div>
+        </t>
+        <t t-else="">
+            <div class="footer">
+                <div style="width : 50% ;float : left">
+                    <img src="/uruk_reports_layout/static/img/uruk_en_footer.png" style="display : block ; width :900px;height : 100px;" alt="Logo"/>
+
+                </div>
+
+
+            </div>
+
+
+        </t>
+
+    </template>
+
+    <template id="external_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <t t-esc="company.update_scss()"/>
+
+        <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.key}}">
+            <t t-raw="0"/>
+        </t>
+        <t t-else="else" t-call="uruk_reports_layout.uruk_layout_standard">
+            <t t-raw="0"/>
+        </t>
+
+    </template>
+
+</odoo>

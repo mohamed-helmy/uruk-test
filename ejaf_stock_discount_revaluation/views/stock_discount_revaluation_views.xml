@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Don't show stock discount recs in default landed costs tree -->
+        <record id="stock_landed_costs.action_stock_landed_cost" model="ir.actions.act_window">
+            <field name="domain">[('is_stock_discount', '=', False)]</field>
+        </record>
+
+        <!-- Stock discount revaluation views -->
+        <record id='view_stock_discount_revaluation_form' model='ir.ui.view'>
+            <field name="name">stock.discount.revaluation.form</field>
+            <field name="model">stock.landed.cost</field>
+            <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form" />
+            <field name="mode">primary</field>
+            <field name="priority">1000</field>
+            <field name="arch" type="xml">
+
+                <!-- hide vendor bill -->
+                <xpath expr="//field[@name='vendor_bill_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vendor_bill_id']" position="after">
+                    <field name="is_stock_discount" invisible="1"/>
+                </xpath>
+
+                <!-- add discount amount -->
+                <xpath expr="//field[@name='cost_lines']/form/group/group[1]/field[@name='price_unit']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cost_lines']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cost_lines']/tree/field[@name='price_unit']" position="after">
+                    <field name="discount_amount"/>
+                </xpath>
+                <xpath expr="//field[@name='cost_lines']/form/group/group[1]/field[@name='price_unit']" position="after">
+                    <field name="discount_amount"/>
+                </xpath>
+                <xpath expr="//field[@name='valuation_adjustment_lines']/form/group/group[2]/field[@name='additional_landed_cost']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='valuation_adjustment_lines']/form/group/group[2]/field[@name='additional_landed_cost']" position="after">
+                    <field name="final_cost"/>
+                </xpath>
+                <xpath expr="//field[@name='valuation_adjustment_lines']/tree/field[@name='final_cost']" position="before">
+                    <field name="additional_landed_cost" string="Deducted Amount"/>
+                </xpath>
+
+                <!-- show only service products -->
+                <xpath expr="//field[@name='cost_lines']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[('type', '=', 'service')]</attribute>
+                </xpath>
+
+                <!-- update strings -->
+                <xpath expr="//label[@for='name']" position="attributes">
+                    <attribute name="string">Stock Discount Revaluation</attribute>
+                </xpath>
+                <xpath expr="//page[1]" position="attributes">
+                    <attribute name="string">Discounts</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cost_lines']" position="attributes">
+                    <attribute name="string">Discount Lines</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cost_lines']/form" position="attributes">
+                    <attribute name="string">Discount Line</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cost_lines']/tree" position="attributes">
+                    <attribute name="string">Discount Line</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cost_lines']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="string">Discount Product</attribute>
+                </xpath>
+                <xpath expr="//field[@name='valuation_adjustment_lines']/tree/field[@name='cost_line_id']" position="attributes">
+                    <attribute name="string">Discount Line</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id='view_stock_discount_revaluation_tree' model='ir.ui.view'>
+            <field name="name">stock.discount.revaluation.tree</field>
+            <field name="model">stock.landed.cost</field>
+            <field name="priority">1000</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Discount Revaluations">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="activity_exception_decoration" widget="activity_exception"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id='action_stock_discount_revaluation' model='ir.actions.act_window'>
+            <field name="name">Stock Discount Revaluations</field>
+            <field name="res_model">stock.landed.cost</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'default_is_stock_discount': True}</field>
+            <field name="domain">[('is_stock_discount', '=', True)]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('ejaf_stock_discount_revaluation.view_stock_discount_revaluation_tree')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('stock_landed_costs.stock_landed_cost_view_kanban')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('ejaf_stock_discount_revaluation.view_stock_discount_revaluation_form')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Stock Discount Revaluation
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_stock_discount_revaluation" name="Stock Discount Revaluation" parent="stock.menu_stock_warehouse_mgmt" id="menu_stock_discount_revaluation" sequence="116"/>
+
+    </data>
+</odoo>

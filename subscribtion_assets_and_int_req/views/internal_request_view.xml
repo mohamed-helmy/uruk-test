@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="internal_transfer_request_form_view" model="ir.ui.view">
+            <field name="name">internal.transfer.request.form</field>
+            <field name="model">internal.transfer.request</field>
+            <field name="inherit_id" ref="ejaf_stock_internal_transfer_request.internal_transfer_request_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="sale_subscription_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

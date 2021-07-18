@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="helpdesk_ticket_batch_form_view" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.batch.form</field>
+            <field name="model">helpdesk.ticket.batch</field>
+            <field name="arch" type="xml">
+                <form string="Ticket Batch">
+                    <header>
+                        <button name="%(action_helpdesk_ticket_wizard)d" string="Generate Tickets"
+                                type="action" context="{'default_batch_id': active_id, 'default_batch_type': batch_type}"
+                                attrs="{'invisible': ['|',('batch_type', '!=', 'customers'),('state','!=','draft')]}"
+                                class="oe_highlight"/>
+
+                        <button name="%(action_helpdesk_ticket_wizard)d" string="Generate tickets for serials"
+                                type="action" context="{'default_batch_id': active_id, 'default_batch_type': batch_type}"
+                                attrs="{'invisible': ['|',('batch_type', '!=', 'serials'),('state','!=','draft')]}"
+                                class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,confirmed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-clipboard" type="object"
+                                    name="open_batch_tickets_ids" string="Tickets">
+
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" placeholder="Subject..." attrs="{'readonly':[('state','=','confirmed')]}"/>
+                                <field name="batch_type" attrs="{'readonly':[('state','=','confirmed')]}"/>
+                                <field name="priority" widget="priority" attrs="{'readonly':[('state','=','confirmed')]}"/>
+                            </group>
+                            <group>
+                                <field name="batch_date" attrs="{'readonly':[('state','=','confirmed')]}"/>
+                                <field name="ticket_type_id" attrs="{'readonly':[('state','=','confirmed')]}"/>
+                            </group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="partner_id"/>
+                                <field name="customer_email"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="helpdesk_ticket_batch_tree_view" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.batch.tree</field>
+            <field name="model">helpdesk.ticket.batch</field>
+            <field name="arch" type="xml">
+                <tree string="Ticket Batch">
+                    <field name="name"/>
+                    <field name="ticket_type_id"/>
+                    <field name="batch_date"/>
+                    <field name="priority" widget="priority"/>
+                </tree>
+            </field>
+        </record>
+        <record id="helpdesk_ticket_batch_action_view" model="ir.actions.act_window">
+            <field name="name">Ticket Batch</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">helpdesk.ticket.batch</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create New Tickets Batch
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="helpdesk_ticket_batch_action_menu"
+                  name="Batch Tickets"
+                  parent="helpdesk.helpdesk_ticket_menu_main"
+                  action="helpdesk_ticket_batch_action_view"
+                  sequence="3"/>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sales_target_categ" model="ir.module.category">
+            <field name="name">Sales Target</field>
+            <field name="sequence" eval="100"/>
+        </record>
+
+        <record id="group_sales_target_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="ejaf_sales_target.sales_target_categ"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_sales_target_administrator" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="ejaf_sales_target.sales_target_categ"/>
+            <field name="implied_ids" eval="[(4, ref('ejaf_sales_target.group_sales_target_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+         <record id="group_show_product_cost" model="res.groups">
+            <field name="name">Show Product cost</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+
+        </record>
+
+    </data>
+</odoo>

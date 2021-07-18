@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<report
+    id="report_multi_scrap_report"
+    model="stock.multi.scrap"
+    string="Report Multi Scrap"
+    report_type="qweb-pdf"
+    name="ejaf_stock_multi_scrap.report_multi_scrap"
+    file="ejaf_stock_multi_scrap.report_multi_scrap"
+    menu="True"
+    attachment_use="False"
+/>
+
+</odoo>
+
+

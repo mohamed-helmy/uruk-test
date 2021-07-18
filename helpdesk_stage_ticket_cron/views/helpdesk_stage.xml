@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<record id="helpdesk_stage_view_form_auto_stage"
+		model="ir.ui.view">
+		<field name="name">helpdesk.stage.form</field>
+		<field name="model">helpdesk.stage</field>
+		<field name="inherit_id" ref="helpdesk.helpdesk_stage_view_form" />
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//field[@name='fold']" position="after">
+					<field name="is_auto_change_stage" />
+					<field name="auto_change_to_stage_id"
+						attrs="{'invisible': [('is_auto_change_stage', '!=', True)], 'required': [('is_auto_change_stage', '=', True)]}" />
+					<field name="auto_change_to_stage_days"
+						attrs="{'invisible': [('is_auto_change_stage', '!=', True)], 'required': [('is_auto_change_stage', '=', True)]}" />
+				</xpath>
+			</data>
+		</field>
+	</record>
+
+</odoo>

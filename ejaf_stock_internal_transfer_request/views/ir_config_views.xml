@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+        <record id="res_config_settings_transfer_request_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.transfer.request.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="71"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div name="transfer_request_settings_block" class="app_settings_block"
+                         data-string="Transfer Request"
+                         string="Transfer Request" data-key="ejaf_stock_internal_transfer_request"
+                         groups="ejaf_stock_internal_transfer_request.group_stock_request_manager">
+                        <h2>Internal Transfer Request</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-12 col-lg-6 o_setting_box"
+                                 title="Allow display Available Qty Field In Internal Transfer Request Lines">
+                                <div class="o_setting_left_pane">
+                                    <field name="group_show_available_qty"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="group_show_available_qty"/>
+                                    <div class="text-muted">
+                                        allow display Available Qty Field In Internal Transfer Request Lines
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="transfer_request_config_settings_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_id" ref="res_config_settings_transfer_request_view_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'ejaf_stock_internal_transfer_request'}</field>
+        </record>
+
+        <menuitem id="transfer_request_configuration_menu_item" name="Configuration"
+                  parent="ejaf_stock_internal_transfer_request.transfer_request_root"
+                  groups="ejaf_stock_internal_transfer_request.group_stock_request_manager"
+                  sequence="1"/>
+        <menuitem
+                id="menu_transfer_request_settings"
+                name="Settings"
+                parent="ejaf_stock_internal_transfer_request.transfer_request_configuration_menu_item"
+                sequence="1"
+                groups="ejaf_stock_internal_transfer_request.group_stock_request_manager"
+                action="transfer_request_config_settings_action"/>
+
+
+    </data>
+</odoo>
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_pos_session_form_inherit" model="ir.ui.view">
+        <field name="name">pos.session.form.view</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_show_payments_list']" position="attributes">
+                <attribute name="icon">fa-money</attribute>
+            </xpath>
+            <xpath expr="//page[1]//group[1]" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[1]/div[1]/group[1]" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[1]" position="inside">
+                <group>
+                    <field name="session_cash_register_ids" nolabel="1">
+                        <tree>
+                            <field name="name" invisible="1"/>
+                            <field name="date" invisible="1"/>
+                            <field name="journal_id" string="Payment Method"/>
+                            <field name="company_id" groups="base.group_multi_company" invisible="1"/>
+                            <field name="balance_start"/>
+                            <field name="cash_register_total_entry_encoding" string="+ Transactions"/>
+                            <field name="cash_register_balance_end" string="= Expected in Cash"/>
+                            <field name="balance_end_real" string="Actual in Cash"/>
+                            <field name="balance_end" invisible="1"/>
+                            <field name="cash_register_difference" attrs="{'column_invisible' : [('parent.state', 'in', ['new_session', 'opening_control', 'opened'])]}"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="state" invisible="1"/>
+                            <field name="is_difference_zero" invisible="1"/>
+                            <button name="open_statement_cashbox" type="object" class="oe_highlight" context="{'balance': 'start', 'session_id': parent.id, 'pos_id': parent.config_id, 'default_payment_method_currency_id': currency_id}" attrs="{'invisible':['|', ('parent.cash_control', '=', False), ('parent.state', '!=', 'opening_control')]}" string="Set Starting Cash"/>
+                            <button name="%(point_of_sale.action_pos_box_out)d" type="action" context="{'active_ids': [id]}" class="oe_highlight" attrs="{'invisible' : [('parent.state', 'in', ['new_session', 'opening_control', 'closed'])]}" string="Cash In/Out"/>
+                            <button name="open_statement_cashbox" type="object" class="oe_highlight" context="{'balance': 'close', 'session_id': parent.id, 'pos_id': parent.config_id, 'default_payment_method_currency_id': currency_id}" attrs="{'invisible': [('parent.state', 'in', ['new_session', 'opening_control', 'closed'])]}" string="Set Closing Cash"/>
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

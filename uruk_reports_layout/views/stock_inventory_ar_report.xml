@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_arabic_inventory">
+       
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="uruk_reports_layout.arabic_external_layout">
+                    <t t-set="address">
+                    </t>
+
+                       <style type="text/css">
+
+                        @font-face {
+                        font-family: 'Sans_Arabic';
+                        src: local('Sans_Arabic'), local('Sans_Arabic'),
+                        url(/uruk_reports_layout/static/fonts/uruk-fonts/Neo_Sans_Arabic_Regular.ttf) format('truetype');
+                        }
+
+                        * {
+                        font-family: Sans_Arabic !important;
+                        
+                        }
+                        </style>
+                
+                         <style>
+                    .vl {
+                    position: absolute;
+                    top: 0px;
+                    left: 800px;
+                    border-left: 2px solid #e5e5e6;;
+                    height: 1000px;
+                    }
+                    </style>
+
+                    <div class="vl"/>
+
+                    <div class="page" style="padding-right:200px">
+
+                        <div class="oe_structure"/>
+
+                        <h2 class="mt16 text-right">
+                            <span t-if="doc.name != '/'" t-field="doc.name"/>
+
+                        </h2>
+
+                        <div class="row text-right" id="informations">
+                            <div class="col-4">
+                                <strong>التاريخ:</strong>
+                                <p class="m-0" t-field="doc.date"/>
+                            </div>
+
+
+                        </div>
+
+                        <!-- Is there a discount on at least one line? -->
+                        <t t-set="locations" t-value="doc.line_ids.mapped('location_id')"/>
+                        <table class="table table-sm o_main_table text-right">
+                            <thead>
+                                <tr>
+                                    <th>الكمية المحسوبة</th>
+                                    <th>الكمية المتوفرة</th>
+                                    <th name="th_lot" groups="stock.group_production_lot" class="text-right">رقم اللوت /
+                                        الرقم التسلسلي
+                                    </th>
+                                    <th name="th_product" class="text-right">المنتج</th>
+                                    <th name="th_description" groups="stock.group_stock_multi_locations"
+                                        class="text-right">الموقع
+                                    </th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody class="inventory_tbody">
+
+                                <t t-foreach="locations" t-as="location">
+                                    <tr groups="stock.group_stock_multi_locations">
+
+                                        <td></td>
+                                        <td></td>
+                                        <td groups="stock.group_tracking_lot"></td>
+                                        <td groups="stock.group_production_lot"></td>
+                                        <td colspan="2">
+                                            <strong t-esc="location.display_name"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr t-foreach="doc.line_ids.filtered(lambda line: line.location_id.id == location.id)"
+                                        t-as="line">
+                                        <td class="text-right">
+                                            <span t-field="line.product_uom_id" groups="uom.group_uom"/>
+
+                                            <span t-field="line.product_qty"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.product_uom_id" groups="uom.group_uom"/>
+
+                                            <span t-field="line.theoretical_qty"/>
+                                        </td>
+                                        <td groups="stock.group_tracking_lot">
+                                            <span t-field="line.package_id"/>
+                                        </td>
+                                        <td groups="stock.group_production_lot">
+                                            <span t-field="line.prod_lot_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.product_id"/>
+                                        </td>
+                                        <td groups="stock.group_stock_multi_locations"></td>
+
+
+                                    </tr>
+
+
+                                </t>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </t>
+
+            </t>
+        </t>
+    </template>
+
+    <report
+            id="inventory_arabic_print"
+            string="المخزن"
+            model="stock.inventory"
+            report_type="qweb-pdf"
+            name="uruk_reports_layout.report_arabic_inventory"
+            file="uruk_reports_layout.report_arabic_inventory"
+            print_report_name="'inventory - %s' % (object.name).replace('/', '')"
+    />
+
+</odoo>

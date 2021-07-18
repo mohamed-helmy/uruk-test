@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="group_all_team_document_access" model="res.groups">
+            <field name="name">All Team Document</field>
+            <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+            <field name="category_id" ref="base.module_category_operations_purchase"/>
+        </record>
+        <record id="purchase_own_documents" model="ir.rule">
+            <field name="name">Own Team Documents</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="domain_force">['|',('team_id.member_ids','in',user.id),('team_id.team_leader_ids','in',user.id)]</field>
+            <field name="groups" eval="[(4, ref('ejaf_purchase_customization_uruk.group_all_team_document_access'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

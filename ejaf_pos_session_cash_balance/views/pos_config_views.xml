@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pos_config_view_form_inherit" model="ir.ui.view">
+        <field name="name">pos.config.form.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_cashbox_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='default_cashbox_id']" position="after">
+                <field name='default_bank_stmt_cashbox_ids' context="{'default_is_a_template': True}" widget="one2many">
+                    <tree>
+                        <field name="payment_method_currency_id"/>
+                        <field name="total"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_bnk_stmt_cashbox" model="ir.ui.view">
+        <field name="name">account.bnk_stmt_cashbox.form</field>
+        <field name="model">account.bank.statement.cashbox</field>
+        <field name="inherit_id" ref="account.view_account_bnk_stmt_cashbox"/>
+        <field name="arch" type="xml">
+          <xpath expr="//field[@name='cashbox_lines_ids']" position="before">
+              <group>
+                  <group>
+                      <field name='payment_method_currency_id' attrs="{'invisible': [('is_a_template', '=', False)]}"/>
+                  </group>
+              </group>
+          </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_bnk_stmt_cashbox_footer" model="ir.ui.view">
+      <field name="name">account.bnk_stmt_cashbox.form.close.modal</field>
+      <field name="model">account.bank.statement.cashbox</field>
+      <field name="inherit_id" ref="point_of_sale.view_account_bnk_stmt_cashbox_footer"/>
+      <field name="arch" type="xml">
+          <xpath expr="//button[@name='set_default_cashbox']" position="attributes">
+              <attribute name="invisible">1</attribute>
+          </xpath>
+          <xpath expr="//button[@name='set_default_cashbox']" position="after">
+              <button name="set_default_cashbox_by_currency" type="object" string="Set Default Cash Opening" />
+          </xpath>
+          <xpath expr="//field[@name='cashbox_lines_ids']" position="before">
+              <group>
+                  <group>
+                      <field name='payment_method_currency_id' readonly="1" force_save="1"/>
+                  </group>
+              </group>
+          </xpath>
+      </field>
+    </record>
+
+</odoo>

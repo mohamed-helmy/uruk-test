@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_multi_scrap">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h3>
+                            <strong>
+                                <span t-field="o.name"/>
+                            </strong>
+                        </h3>
+                        <br/>
+                        <br/>
+                        <br/>
+
+
+
+                        <div class="row">
+
+                            <t>
+                                <strong>Scrap Location:</strong>
+                            </t>
+                            <t>
+                                <span t-field="o.scrap_location_id"/>
+                            </t>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+
+                            <t>
+                                <strong>Expected Date:</strong>
+                            </t>
+                            <t>
+                                <span t-field="o.expected_date"/>
+                            </t>
+
+
+                        </div>
+                        <br></br>
+
+
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <table class="table table-condensed" width="100%">
+                            <thead>
+                                <tr class="bg-gray-lighter">
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Source Location</th>
+                                    <th>Unit of Measure</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr t-foreach="o.products_ids" t-as="line">
+                                    <td>
+                                        <span t-field="line.product_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.scrap_qty"/>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span t-field="line.location_id"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_uom_id"/>
+                                    </td>
+
+
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

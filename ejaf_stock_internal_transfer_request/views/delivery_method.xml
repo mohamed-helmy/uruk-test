@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="delivery_method_form_view" model="ir.ui.view">
+            <field name="name">delivery.method.form</field>
+            <field name="model">delivery.method</field>
+            <field name="arch" type="xml">
+                <form string="Delivery Method">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="delivery_method_tree_view" model="ir.ui.view">
+            <field name="name">delivery.method.tree</field>
+            <field name="model">delivery.method</field>
+            <field name="arch" type="xml">
+                <tree string="Delivery Method">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="delivery_method_view_action" model="ir.actions.act_window">
+            <field name="name">Delivery Method</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">delivery.method</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+        <menuitem
+                id="menu_transfer_delivery_method"
+                name="Delivery Method"
+                parent="ejaf_stock_internal_transfer_request.transfer_request_configuration_menu_item"
+                sequence="2"
+                groups="ejaf_stock_internal_transfer_request.group_stock_request_manager"
+                action="delivery_method_view_action"/>
+    </data>
+</odoo>

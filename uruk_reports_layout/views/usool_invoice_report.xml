@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="usool_report_english_invoice">
+
+        <t t-name="uruk_reports_layout.usool_report_english_invoice">
+
+
+
+            <t t-call="web.html_container">
+
+                <t t-foreach="docs" t-as="doc">
+
+                    <t t-call="uruk_reports_layout.usool_layout_standard">
+
+
+
+                        <style type="text/css">
+
+
+
+                        @font-face {
+
+                        font-family: 'Rajdhani';
+
+                        src: local('Rajdhani'), local('Rajdhani'),
+
+                        url(/uruk_reports_layout/static/fonts/uruk-fonts/Rajdhani-Regular.ttf) format('truetype');
+
+                        }
+
+
+
+                        * {
+
+                        font-family: Rajdhani !important;
+
+                        }
+
+                        
+
+                        
+
+                        .table-bordered th, .table-bordered td {
+
+                            border: 1px solid #F7CAAC;
+
+                        }
+
+                        </style>
+
+                        <div class="page">
+
+
+
+
+
+                            <img style="
+
+                              position: absolute;
+
+                                top: 0px;
+
+                                left: 10px;
+
+                                z-index: -10;
+
+                                height:1000px;
+
+                                width:600px;
+
+            
+
+                              " src='/uruk_reports_layout/static/img/water-mark.png'></img>
+
+
+
+                              <div class="wrapper_new" style="min-height:60px"> </div>
+                            <div class="row text-left" id="informations">
+
+
+
+                                <div class="col-6 text-left">
+
+                                    <b style="font-size:25px">Invoice To :</b>
+
+                                    <span style="font-size:25px" t-field="doc.partner_id.name"/>
+
+                                </div>
+
+
+
+                                <div class="col-8">
+
+                                    <b style="font-size:25px">Invoice :</b>
+
+                                    <span style="font-size:25px" t-field="doc.name"/>
+
+                                    <br/>
+
+                                    <div t-if="doc.partner_shipping_id" style="display: block ruby;" class="mt8">
+
+                                        <b style="font-size:25px">Ship To :</b>
+
+                                        <span style="font-size:25px" t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+
+                                    </div>
+
+
+
+                                </div>
+
+
+
+
+
+                            </div>
+
+                            <br/>
+
+
+
+
+
+                            <table style="width : 100%;text-align : left">
+
+                                <tr>
+
+                                    <td style="width : 50%">
+
+                                        <span style="font-size:24px">PAYMENT TERMS :</span>
+
+                                        <span style="font-size:24px" t-field="doc.invoice_payment_term_id.name"/>
+
+
+
+                                    </td>
+
+                                    <td style="width : 50%" class="text-left">
+
+                                    </td>
+
+                                </tr>
+
+
+
+                                <tr>
+
+
+
+                                    <td style="width : 50%">
+
+                                        <span style="font-size:24px">ISSUE DATE :</span>
+
+                                        <span style="font-size:24px" t-field="doc.invoice_date"/>
+
+
+
+                                    </td>
+
+                                    <td style="width : 50%" class="text-left">
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+
+
+                                    <td style="width : 50%">
+
+
+
+                                        <span style="font-size:24px">DUE DATE :</span>
+
+                                        <span style="font-size:24px" t-field="doc.invoice_date_due" class="text-left"/>
+
+
+
+                                    </td>
+
+                                    <td style="width : 50%" class="text-left">
+
+
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+                            <br/>
+
+                            <br/>
+
+                            <table class="table table-bordered mb32" style="table-layout:auto">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th style="background-color:#FFE599" name="th_description" class="text-center">SN.
+
+                                        </th>
+
+                                        <th style="background-color:#FFE599;width:20%" name="th_part_no" class="text-center">PART
+
+                                        NO.
+
+                                        </th>
+
+                                        <th style="background-color:#FFE599" name="th_quantity" class="text-center">CODE
+
+                                        </th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">DESCRIPTION
+
+                                        </th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">QTY</th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">UOM</th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">U.P</th>
+
+                                        <th style="background-color:#FFE599" name="th_des" class="text-center">T.P</th>
+
+
+
+
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody class="sale_tbody">
+
+                                    <t t-set="count" t-value="0"/>
+
+
+
+                                    <t t-set="current_subtotal" t-value="0"/>
+
+
+
+                                    <t t-foreach="doc.invoice_line_ids" t-as="line">
+
+
+
+
+
+                                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+
+                                            <t t-if="not line.display_type">
+
+
+
+                                                <t t-set="count" t-value="count+1"/>
+
+
+
+                                                <td class="text-center">
+
+                                                    <span t-esc="count"/>
+
+                                                </td>
+
+                                                <td name="td_code" class="text-center">
+
+                                                    <span t-field="line.product_id.default_code"/>
+
+                                                </td>
+
+
+
+
+
+                                                <td name="td_barcode" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.barcode"/>
+
+                                                </td>
+
+                                                <td name="td_name" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.name"/>
+
+                                                </td>
+
+                                                <td name="td_qty" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.quantity"/>
+
+                                                </td>
+
+                                                <td name="td_uom" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.product_uom_id.name"/>
+
+                                                </td>
+
+                                                <td name="td_price" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.price_unit"/>
+
+                                                </td>
+
+                                                <td name="td_tot" class="text-center">
+
+                                                    <span style="font-size:20px" t-field="line.price_subtotal"/>
+
+                                                </td>
+
+
+
+                                            </t>
+
+                                            <t t-if="line.display_type == 'line_section'">
+
+                                                <td name="td_section_line" colspan="99">
+
+                                                    <span style="font-size:20px" t-field="line.name"/>
+
+                                                </td>
+
+                                                <t t-set="current_section" t-value="line"/>
+
+                                                <t t-set="current_subtotal" t-value="0"/>
+
+                                            </t>
+
+                                            <t t-if="line.display_type == 'line_note'">
+
+                                                <td name="td_note_line" colspan="99">
+
+                                                    <span style="font-size:20px" t-field="line.name"/>
+
+                                                </td>
+
+                                            </t>
+
+                                        </tr>
+
+
+
+                                    </t>
+
+
+
+                                    <tr>
+
+                                        <td style="border-left:0px"></td>
+
+                                        <td style="border-left:0px"></td>
+
+
+
+
+
+                                        <td colspan="5" style="width : 60%;text-align:left">
+
+                                            <span style="font-size:20px">Total :</span>
+
+
+
+                                        </td>
+
+                                        <td style="width : 30% ; font-size:20px" class="text-center">
+
+                                            <span t-field="doc.amount_total" />
+
+
+
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td colspan="12" style="width : 100%;background-color:#FFE599">
+
+                                            <strong>
+
+                                                <span t-esc="doc.amount_to_text(doc.amount_total)"/>
+
+                                            </strong>
+
+
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+
+
+
+
+                            <br/>
+
+                            <table style="width : 100%;text-align : left">
+
+                                <tr>
+
+
+
+                                    <td style="width : 30%">
+
+                                        <strong style="font-size:22px">BANK DETAILS :</strong>
+
+                                    </td>
+
+                                    <br/>
+
+
+
+
+
+
+
+                                </tr>
+
+                                <tr>
+
+
+
+
+
+                                    <td style="width : 30%">
+
+                                        <span style="font-size:25px">
+
+                                        Name of Bank :
+
+                                        </span>
+
+
+
+                                        <span style="font-size:25px" t-field="doc.partner_id.default_payment_method_id.bank_id"/>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+
+
+
+
+                                    <td style="width : 30%">
+
+                                        <span style="font-size:25px">
+
+                                        SWIFT :
+
+                                        </span>
+
+
+
+                                        <span style="font-size:18px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.swift"/>
+
+
+
+                                    </td>
+
+                                </tr>
+
+
+
+                                <tr>
+
+
+
+
+
+                                    <td style="width : 30%">
+
+                                        <span style="font-size:25px">
+
+                                        Account NO. :
+
+                                        </span>
+
+
+
+                                        <span style="font-size:25px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.acc_number"/>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+
+
+
+
+                                    <td style="width : 30%">
+
+                                        <span style="font-size:25px">
+
+                                        Full Name: :
+
+                                        </span>
+
+
+
+                                        <span style="font-size:25px">
+
+                                        Al- Usool General Trading Company limited
+
+                                        </span>
+
+                                        <br/>
+
+                                        <span t-field="doc.company_id.street"/>
+
+
+
+                                        <span t-field="doc.company_id.street2" t-if="doc.company_id.street2"/>
+
+
+
+                                        <span t-field="doc.company_id.city"/>
+
+                                        <span t-field="doc.company_id.state_id"/>
+
+                                        <span t-field="doc.company_id.zip"/>
+
+
+
+                                        <span t-field="doc.company_id.country_id"/>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+
+
+
+
+                                    <td style="width : 30%">
+
+                                        <span style="font-size:25px">
+
+                                        IBAN NO :
+
+                                        </span>
+
+                                        <span style="font-size:25px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.iban_no"/>
+
+
+
+
+
+                                    </td>
+
+                                </tr>
+
+
+
+                            </table>
+
+                            <br/>
+
+                            <br/>
+
+                            <div class="text-left">
+
+                                <span style="font-size:22px">
+
+                                Thank you for business.
+
+                                </span>
+
+                            </div>
+
+                            <br/>
+
+                            <br/>
+
+                            <br/>
+
+                            <div class="text-right">
+
+                                <strong style="font-size:22px">
+
+                                SignatureAnd Stamp
+
+                                </strong>
+
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+
+                    </t>
+
+                </t>
+
+            </t>
+
+        </t>
+
+
+
+    </template>
+
+    <report id="usool_english_print" string="Usool Invoice" model="account.move" report_type="qweb-pdf" name="uruk_reports_layout.usool_report_english_invoice" file="uruk_reports_layout.usool_report_english_invoice" print_report_name="'Invoice - %s' % (object.name).replace('/', '')" />
+
+</odoo>

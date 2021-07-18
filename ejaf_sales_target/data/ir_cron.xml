@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<record id="ir_cron_close_sale_target" model="ir.cron">
+		<field name="name">Close Sale target At End Date</field>
+		<field name="model_id" ref="model_sale_target" />
+		<field name="type">ir.actions.server</field>
+		<field name="state">code</field>
+		<field name="code">model.close_sale_target()</field>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="user_id" ref="base.user_admin" />
+		<field name="numbercall">-1</field>
+	</record>
+
+</odoo>

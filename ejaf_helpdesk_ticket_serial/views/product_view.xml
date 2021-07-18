@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='group_general']/field[last()]" position="after">
+                    <label for="warranty_period" />
+                    <div>
+                        <field name="warranty_period" class="oe_inline"/> days
+                    </div>
+                    <field name="warranty_terms" />
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

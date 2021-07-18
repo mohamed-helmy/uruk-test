@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_template_only_form_view" model="ir.ui.view">
+            <field name="name">product.template</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='variants']" position="attributes">
+                    <attribute name="groups">ejaf_products_group.group_product_full_access</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_template_property_form_inherit" model="ir.ui.view">
+            <field name="name">product.template</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock_account.view_template_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(stock_account.action_view_change_standard_price)d']" position="attributes">
+                    <attribute name="groups">ejaf_products_group.group_product_full_access</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_variant_easy_edit_view_inherit" model="ir.ui.view">
+            <field name="name">product.product</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock_account.product_variant_easy_edit_view_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(stock_account.action_view_change_standard_price)d']" position="attributes">
+                    <attribute name="groups">ejaf_products_group.group_product_full_access</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

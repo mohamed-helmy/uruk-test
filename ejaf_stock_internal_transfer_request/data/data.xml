@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="sequence_internal_transfer_request_job" model="ir.sequence">
+            <field name="name">Internal Transfer Request Job Sequence</field>
+            <field name="code">internal.transfer.request</field>
+            <field name="prefix">INT/Req/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="main_menu">
+        <t t-jquery="div.row:last" t-operation="prepend">
+            <div class="col">
+                <button class="button_product btn btn-block btn-primary">Product Details</button>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="stock_barcode_summary_template">
+        <t t-jquery="div.o_barcode_product_line" t-operation="prepend">
+            <span t-if="model == 'product.product'" class="o_barcode_locations">
+                <div class="d-inline-block font-weight-bold text-right">
+                    <span> Product Details </span>
+                </div>
+            </span>
+        </t>
+    </t>
+
+    <t t-extend="stock_barcode_lines_widget">
+        <t t-jquery="div.o_barcode_control.d-flex:first" t-operation="replace">
+            <div t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel' &amp;&amp; widget.mode !== 'productDetails'" class="o_barcode_control d-flex">
+                <button class="btn btn-secondary text-uppercase o_add_line"><i class="fa fa-plus mr-1"/> Add product</button>
+                <button t-if="widget.groups.group_tracking_lot and widget.model == 'stock.picking'" class="btn btn-secondary text-uppercase o_put_in_pack"><i class="fa fa-cube mr-1"/> Put In Pack</button>
+            </div>
+        </t>
+        <t t-jquery="div.o_barcode_control.d-flex:last" t-operation="replace">
+            <div t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel' &amp;&amp; widget.mode !== 'productDetails'" class="o_barcode_control d-flex">
+                <button t-if="widget.groups.group_stock_multi_locations" class="btn btn-secondary text-uppercase o_previous_page"><i class="fa fa-angle-left mr-3"/>Previous</button>
+                <button t-if="widget.groups.group_stock_multi_locations" class="btn btn-secondary text-uppercase o_next_page">Next<i class="fa fa-angle-right ml-3"/></button>
+                <button class="btn btn-secondary text-uppercase o_validate_page"><i class="fa fa-check mr-1"/> Validate</button>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="stock_barcode_lines_template">
+        <t t-jquery="t[t-foreach='lines']" t-operation="append">
+            <div class="o_barcode_line list-group-item d-flex flex-row flex-nowrap" t-if="model == 'product.product'" t-att-data-id="line.virtual_id || line.id" t-att-data-barcode="line.product_barcode">
+                <div class="o_barcode_line_details flex-grow-1 flex-column flex-nowrap">
+                    <div class="o_barcode_line_title pb-1"><i class="fa fa-fw fa-tags"/> <span class="product-label"><t t-esc="line.display_name"/></span></div>
+                    <div class="o_barcode_line_title pb-1"><i class="fa fa-fw fa-money"/> <span class="product-label"><t t-if="line.currency_symbol and line.currency_symbol_before" t-esc="line.currency_symbol"/><t t-esc="line.list_price"/><t t-if="line.currency_symbol and line.currency_symbol_after" t-esc="line.currency_symbol"/></span></div>
+                    <div>
+                        <i class="fa fa-fw fa-cubes"/>
+                        <span t-attf-class="o_barcode_scanner_qty text-monospace badge">
+                            <span class="qty-done d-inline-block text-left" t-esc="line.qty_available"/>
+                        </span>
+                        <span t-esc="line.product_uom_id[1]"/>
+                    </div>
+                    <t t-foreach="line.qty_per_location" t-as="q">
+                        <div style="margin-left: 20px;">
+                            <i class="fa fa-fw fa-cube"/>
+                            <span t-esc="q[0]" style="font-size: 1em;"/> >>>
+                            <span t-attf-class="o_barcode_scanner_qty text-monospace badge">
+                                <span class="qty-done d-inline-block text-left" t-esc="q[1]"/>
+                            </span>
+                            <span t-esc="line.product_uom_id[1]"/>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </t>
+
+</templates>

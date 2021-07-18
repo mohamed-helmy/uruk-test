@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sale_subscription_view_form" model="ir.ui.view">
+            <field name="name">sale.subscription.form.view</field>
+            <field name="model">sale.subscription</field>
+            <field name="inherit_id" ref="sale_subscription.sale_subscription_view_form"/>
+            <field name="arch" type="xml">
+
+                <!--<xpath expr="//button[@name='recurring_invoice']" position="after">-->
+                    <!--<button string="Create Fixed Assets" name="create_fixed_asset"-->
+                            <!--type="object"-->
+                            <!--attrs="{'invisible': [('number_asset_ids', '>', 0)]}"/>-->
+                    <!--<button string="Create Internal Transfer Request" name="create_internal_request"-->
+                                <!--type="object"-->
+                                <!--attrs="{'invisible': [('number_int_req_ids', '>', 0)]}"/>-->
+                 <!--</xpath>-->
+                <!--<xpath expr="//button[@name='action_subscription_invoice']" position="after">-->
+                    <!--<field name="number_asset_ids" invisible="1"/>-->
+                    <!--<field name="number_int_req_ids" invisible="1"/>-->
+
+                    <!--<button name="action_open_asset_ids"-->
+                            <!--type="object"-->
+                            <!--class="oe_stat_button"-->
+                            <!--icon="fa-id-card-o"-->
+                            <!--attrs="{'invisible': [('number_asset_ids', '=', 0)]}">-->
+                            <!--<field name="number_asset_ids" widget="statinfo" string="Assets"/>-->
+                    <!--</button>-->
+                    <!--<button name="action_open_int_request_ids"-->
+                            <!--type="object"-->
+                            <!--class="oe_stat_button"-->
+                            <!--icon="fa-clipboard"-->
+                            <!--attrs="{'invisible': [('number_int_req_ids', '=', 0)]}">-->
+                            <!--<field name="number_int_req_ids" widget="statinfo" string="Internal Request"/>-->
+                    <!--</button>-->
+                <!--</xpath>-->
+                <xpath expr="//page[last()]" position="after" >
+                    <page string="Assets products" name="assets_products">
+                        <field name="subscription_asset_product_ids">
+                            <tree editable="bottom">
+                                <field name="product_id" />
+                                <field name="name" />
+                                <field name="model_id"
+                                       context="{'default_state': 'model', 'default_asset_type': 'purchase','form_view_ref':'account_asset.view_account_asset_form'}"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

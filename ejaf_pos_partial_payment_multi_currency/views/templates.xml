@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/ejaf_pos_partial_payment_multi_currency/static/src/js/pos.js"></script>
+            <script type="text/javascript" src="/ejaf_pos_partial_payment_multi_currency/static/src/js/models.js"></script>
+            <script type="text/javascript" src="/ejaf_pos_partial_payment_multi_currency/static/src/js/screen.js"></script>
+
+            <link rel="stylesheet" type="text/scss"
+                  href="/ejaf_pos_partial_payment_multi_currency/static/src/scss/pos_multi_currency.scss"/>
+        </xpath>
+    </template>
+</odoo>

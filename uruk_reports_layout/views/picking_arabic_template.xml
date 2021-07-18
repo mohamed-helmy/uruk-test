@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_arabic_picking">
+  
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="uruk_reports_layout.arabic_external_layout">
+
+
+                    <style type="text/css">
+
+                        @font-face {
+                        font-family: 'Sans_Arabic';
+                        src: local('Sans_Arabic'), local('Sans_Arabic'),
+                        url(/uruk_reports_layout/static/fonts/uruk-fonts/Neo_Sans_Arabic_Regular.ttf) format('truetype');
+                        }
+
+                        * {
+                        font-family: Sans_Arabic !important;
+                        
+                        }
+                        </style>
+                        <style>
+                            .vl {
+                            position: absolute;
+                            top: 0px;
+                            z-index:90 !important;
+                            left: 1290px;
+                            border-left: 2px solid #e5e5e6;;
+                            height: 1500px;
+                            }
+                        </style>
+                        <div class="vl"></div>
+
+
+
+
+
+                        <div class="page " style="padding-right:200px">
+                            <div class="row">
+                                <div class="col-12"></div>
+                                <div class="text-right">
+                                    <div class="text-right" t-if="o.partner_id" name="partner_header">
+                                        <div t-field="o.partner_id"
+                                             t-options='{"widget": "contact", "fields": ["name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                        <p t-if="o.sudo().partner_id.vat"><t
+                                                t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:
+                                            <span t-field="o.sudo().partner_id.vat"/>
+                                        </p>
+                                    </div>
+                                    <div t-if="o.move_ids_without_package and o.move_ids_without_package[0].partner_id and o.move_ids_without_package[0].partner_id.id != o.partner_id.id">
+                                        <span>
+                                            <strong>عنوان التسليم</strong>
+                                        </span>
+                                        <div t-field="o.move_ids_without_package[0].partner_id"
+                                             t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                    </div>
+                                    <div t-if="o.picking_type_id.code != 'internal' and (not o.move_ids_without_package or not o.move_ids_without_package[0].partner_id) and o.picking_type_id.warehouse_id.partner_id">
+                                        <span>
+                                            <strong>عنوان المخزن</strong>
+                                        </span>
+                                        <div t-field="o.picking_type_id.warehouse_id.partner_id"
+                                             t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                    </div>
+                                </div>
+                                <div class="col-6"/>
+                                <div class="col-5 text-right">
+                                    <div t-if="o.picking_type_id.code=='incoming' and o.partner_id">
+                                        <span>
+                                            <strong>عنوان المورد</strong>
+                                        </span>
+                                    </div>
+                                    <div t-if="o.picking_type_id.code=='internal' and o.partner_id">
+                                        <span>
+                                            <strong>عنوان المخزن</strong>
+                                        </span>
+                                    </div>
+                                    <div t-if="o.picking_type_id.code=='outgoing' and o.partner_id">
+                                        <span>
+                                            <strong>عنوان العميل</strong>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+
+                            <h1 t-field="o.name" class="mt0 text-right"/>
+
+                            <div class="row mt48 mb32">
+                                <div class="col-4 text-right" name="div_sched_date">
+                                    <strong>التاريخ المجدول</strong>
+                                    <p t-field="o.scheduled_date"/>
+                                </div>
+
+                                <div class="col-4 text-right">
+                                    <strong>الحالة</strong>
+                                    <p t-field="o.state"/>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <strong>المصدر</strong>
+                                    <p t-field="o.origin"/>
+                                </div>
+                            </div>
+                            <table class="table table-sm text-right"
+                                   t-if="o.move_line_ids and o.move_ids_without_package">
+                                <t t-set="has_barcode"
+                                   t-value="any([move_ids_without_package.product_id and move_ids_without_package.product_id.sudo().barcode or move_ids_without_package.package_id for move_ids_without_package in o.move_line_ids])"/>
+                                <t t-set="has_serial_number"
+                                   t-value="o.move_line_ids.filtered(lambda ml: ml.lot_id or ml.lot_name)"
+                                   groups="stock.group_production_lot"/>
+                                <thead>
+                                    <tr>
+                                        <th t-if="has_barcode">
+                                            <strong>الباركود</strong>
+                                        </th>
+                                        <th class="text-right" t-if="has_serial_number">
+                                            <strong>رقم السريال</strong>
+                                        </th>
+                                        <th t-if="o.picking_type_id.code != 'outgoing'"
+                                            groups="stock.group_stock_multi_locations">
+                                            <strong>الي</strong>
+                                        </th>
+                                        <th t-if="o.picking_type_id.code != 'incoming'"
+                                            groups="stock.group_stock_multi_locations">
+                                            <strong>من</strong>
+                                        </th>
+
+                                        <th class="text-right">
+                                            <strong>الكمية</strong>
+                                        </th>
+                                        <th class="text-right">
+                                            <strong>المنتج</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.move_ids_without_package.sorted(key=lambda m: m.product_id.id)"
+                                       t-as="move">
+                                        <t t-foreach="move.move_line_ids.sorted(key=lambda ml: ml.location_id.id)"
+                                           t-as="ml">
+                                            <tr>
+                                                <td class="text-right" t-if="has_barcode">
+                                                    <t t-if="product_barcode != move.product_id.barcode">
+                                                        <span t-if="move.product_id and move.product_id.barcode">
+                                                            <img t-if="len(move.product_id.barcode) == 13"
+                                                                 t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('EAN13', move.product_id.barcode, 400, 100, 0)"
+                                                                 style="height:35px" alt="Barcode"/>
+                                                            <img t-elif="len(move.product_id.barcode) == 8"
+                                                                 t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('EAN8', move.product_id.barcode, 400, 100, 0)"
+                                                                 style="height:35px" alt="Barcode"/>
+                                                            <img t-else=""
+                                                                 t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('Code128', move.product_id.barcode, 400, 100, 0)"
+                                                                 style="height:35px" alt="Barcode"/>
+
+                                                        </span>
+                                                        <t t-set="product_barcode" t-value="move.product_id.barcode"/>
+                                                    </t>
+                                                </td>
+                                                <td class=" text-right h6" t-if="has_serial_number">
+                                                    <img t-if="has_serial_number and (ml.lot_id or ml.lot_name)"
+                                                         t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', ml.lot_id.name or ml.lot_name, 400, 100)"
+                                                         style="width:100%;height:35px;" alt="Barcode"/>
+
+                                                </td>
+                                                <td t-if="o.picking_type_id.code != 'outgoing'"
+                                                    groups="stock.group_stock_multi_locations">
+                                                    <div>
+                                                        <span t-field="ml.location_dest_id"/>
+                                                        <t t-if="ml.result_package_id">
+                                                            <span t-field="ml.result_package_id"/>
+                                                        </t>
+                                                    </div>
+                                                </td>
+                                                <td t-if="o.picking_type_id.code != 'incoming'"
+                                                    groups="stock.group_stock_multi_locations">
+                                                    <span t-esc="ml.location_id.display_name"/>
+                                                    <t t-if="ml.package_id">
+                                                        <span t-field="ml.package_id"/>
+                                                    </t>
+                                                </td>
+                                                <td t-if="doc.company_id.is_not_decimal_accuracy">
+                                                    <span t-if="o.state != 'done'" t-esc="round(ml.product_uom_qty)"/>
+                                                    <span t-if="o.state == 'done'" t-esc="round(ml.qty_done)"/>
+                                                    <span t-field="ml.product_uom_id" groups="uom.group_uom"/>
+
+                                                </td>
+                                                <td t-else="">
+                                                    <span t-if="o.state != 'done'" t-field="ml.product_uom_qty"/>
+                                                    <span t-if="o.state == 'done'" t-field="ml.qty_done"/>
+                                                    <span t-field="ml.product_uom_id" groups="uom.group_uom"/>
+
+                                                </td>
+                                                <td>
+                                                    <span t-field="ml.product_id.display_name"/>
+                                                    <br/>
+                                                    <span t-field="ml.product_id.description_picking"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <p t-field="o.note"/>
+                        </div>
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+        <report
+                id="picking_arabic_print"
+                string="الشحنات"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                name="uruk_reports_layout.report_arabic_picking"
+                file="uruk_reports_layout.report_arabic_picking"
+                print_report_name="'Picking - %s' % (object.name).replace('/', '')"
+        />
+    </data>
+</odoo>

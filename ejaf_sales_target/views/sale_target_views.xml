@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sales_target_form_view" model="ir.ui.view">
+        <field name="name">sale.target</field>
+        <field name="model">sale.target</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="action_confirm" type="object"
+                            string="Confirm" groups="sales_team.group_sale_manager"
+                            states="draft"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel" groups="sales_team.group_sale_manager"
+                            states="open"/>
+                    <button type="object" name="toggle_active" string="Archive"
+                            attrs="{'invisible': [('active', '=', False)]}"
+                            groups="ejaf_sales_target.group_sales_target_administrator"/>
+
+                    <button type="object" name="toggle_active" string="Restore"
+                            attrs="{'invisible': [('active', '=', True)]}"
+                            groups="ejaf_sales_target.group_sales_target_administrator"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,open,canceled,closed"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" text="Archived" bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '=', True)]}"/>
+
+                    <div class="oe_title" name="name">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"
+                                   attrs="{'readonly': True}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sales_person_id"
+                                   attrs="{'required':True, 'readonly':[('state', '!=','draft')]}"/>
+                            <field name="start_date"
+                                   attrs="{'required':True, 'readonly':[('state', '!=','draft')]}"/>
+                            <field name="end_date"
+                                   attrs="{'required':True, 'readonly':[('state', '!=','draft')]}"/>
+                            <field name="target_achieve_type"
+                                   attrs="{'required':True, 'readonly':[('state', '!=','draft')]}"/>
+                            <field name="company_id" groups="base.group_multi_company"
+                                   attrs="{'required':True, 'readonly':[('state', '!=','draft')]}"/>
+                            <field name="enable_crm_only"
+                                   attrs="{'readonly':[('state', '!=','draft')]}"/>
+
+                        </group>
+                        <group>
+                            <field name="target_amount"
+                                   attrs="{'required':True, 'readonly':[('state', '!=','draft')]}"/>
+                            <field name="difference"/>
+                            <field name="total_achievement"/>
+                            <field name="achievement_percent"/>
+                            <field name="responsible_id"
+                                   attrs="{'required':True, 'readonly':[('state', '!=','draft')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="target_line" string="Target Lines">
+                            <field name="line_ids" attrs="{'readonly':[('state', '!=','draft')]}">
+                                <tree editable="bottom">
+                                    <field name="product_category_id"
+                                           attrs="{'required': True}"/>
+                                    <field name="bonus_condition_from"/>
+                                    <field name="bonus_condition_to"/>
+                                    <field name="bonus_percent"/>
+                                    <field name="amount_achieved"/>
+                                    <field name="achieved_percent"/>
+                                    <field name="bonus"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="sales_target_tree_view" model="ir.ui.view">
+        <field name="name">sale.target</field>
+        <field name="model">sale.target</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="target_achieve_type"/>
+                <field name="target_amount"/>
+                <field name="responsible_id"/>
+                <field name="sales_person_id"/>
+                <field name="total_achievement"/>
+                <field name="achievement_percent"/>
+                <field name="difference"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sales_target_action" model="ir.actions.act_window">
+        <field name="name">Sales Target</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.target</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sales_target"
+              name="Sales Target"
+              parent="sale.sale_menu_root"
+              action="sales_target_action"
+              sequence="5"
+              groups="ejaf_sales_target.group_sales_target_user"
+    />
+</odoo>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_lead_tag_tree" model="ir.ui.view">
+            <field name="name">crm.lead.tag</field>
+            <field name="model">crm.lead.tag</field>
+            <field name="inherit_id" ref="crm.crm_lead_tag_tree" />
+            <field name="arch" type="xml">
+                <field name="color" postion="after">
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </field>
+
+            </field>
+        </record>
+    </data>
+</odoo>

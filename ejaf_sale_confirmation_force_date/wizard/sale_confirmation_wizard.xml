@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_sale_confirmation_wizard_wizard" model="ir.ui.view">
+            <field name="name">sale.confirmation.wizard</field>
+            <field name="model">sale.confirmation.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="force_confirmation_date"/>
+                        <field name="order_id" options="{'no_create_edit': True}" domain="[('state', 'in', ['draft', 'sent'])]" attrs="{'readonly': [('order_id', '!=', False)]}" force_save="1"/>
+                    </group>
+                    <footer>
+                        <button name="button_confirm" string="Confirm" type="object"
+                                class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_sale_confirmation_wizard" model="ir.actions.act_window">
+            <field name="name">Select Confirmation Force Date</field>
+            <field name="res_model">sale.confirmation.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sale_confirmation_wizard_wizard"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

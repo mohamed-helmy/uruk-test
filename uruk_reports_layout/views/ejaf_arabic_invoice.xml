@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="report_arabic_invoice">
+
+
+
+
+        <t t-name="uruk_reports_layout.report_arabic_invoice">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+
+
+                    <div class="header" style=" font-family: Sans_Arabic !important;">
+                        <style type="text/css">
+                        @font-face {
+                        font-family: 'Sans_Arabic';
+                        src: local('Sans_Arabic'), local('Sans_Arabic'),
+                        url(/uruk_reports_layout/static/fonts/uruk-fonts/Neo_Sans_Arabic_Regular.ttf) format('truetype');
+                        }
+
+                        * {
+                        font-family: Sans_Arabic !important;
+
+                        }
+                        
+                  
+                        
+                        .header{
+                        font-family: Sans_Arabic !important;
+                        }
+                        
+                        
+                        .line {
+                          	border-bottom: 1px solid #727376;
+                          	position: absolute;
+                          	top: 120px;
+                          	right: 23px;
+                         width: 665px;
+                          }
+                                
+                          .h-line {
+                          	border-right: 1px solid #727376;
+                          	position: absolute;
+                          	right: 87px;
+                          	height: 50px;
+                          	top: 72px;
+                          }
+                          
+                          .h1-line {
+                          	border-right: 1px solid #727376;
+                          	position: absolute;
+                          	right: 23px;
+                          	height: 35px;
+                          	top: 120px;
+                          }
+
+
+                  .h2-line {
+                  	position: absolute;
+                  	right: 706px;
+                  	transform: rotate(-51deg);
+                  	-ms-transform: rotate(-51deg);
+                  	-webkit-transform: rotate(-51deg);
+                  	border-right: 1px solid #727376;
+                  	height: 49px;
+                  	top: 81px;
+                  }
+                  
+
+
+
+
+                        </style>
+
+
+
+
+                        <div style="position: absolute; top: -9px; right: 23px;  font-family: Sans_Arabic !important;">
+                            <h2 style=" font-family: Sans_Arabic !important;">  فاتورة مبيعات</h2>
+                            <h4 style=" font-family: Sans_Arabic !important;" t-field="doc.name"/>
+                        </div>
+
+                        <div>
+
+
+                            <h7 style="position: absolute;  top:67px; right:23px; font-size:11px ; color:black">فرع بغداد </h7>
+
+                            <h7 style="position: absolute; top:81px; right:23px; font-size:11px; color:black">فرع اربيل </h7>
+
+                            <h7 style="position: absolute; top:95px; right:23px; font-size:11px; color:black">فرع البصرة </h7>
+
+
+
+                            <h7 style="position: absolute;  top:67px; right:110px; font-size:11px ; color:black">
+                      info@urukco.com المنصور, محلة ٦٠٩,شارع ا , بناية ٢٥,ص ب,٥٠٣٠٠,بغداد,العراق,هاتف ٧٨١٣٧٠٤٩٥٤ (٠) ٩٦٤+ | بريد الكتروني 
+                            </h7>
+                            <h7 style="position: absolute; top:81px; right:110px; font-size:11px; color:black"> 
+                      +شارع ١٠٠, القرية الايطالية ١, بناية ٢٧ ,اربيل,العراق,هاتف ٨١١٨٠٠٠ ٧٥٠ (٠) ٩٦٤
+                            </h7>
+                            <h7 style="position: absolute; top:95px; right:110px; font-size:11px; color:black">
+                      +شارع الكورنيش, بناية شط العرب, مجاور فندق الشيراتون, البصرة, العراق, هاتف ٩٢٦٧٨١٨ ٧٥٠ (٠) ٩٦٤  
+                            </h7>
+
+
+
+
+
+                            <div class="line"/>
+                            <div class="h2-line"/>
+                            <div class="h-line"/>
+                            <div style="z-index:-10" class="h1-line"/>
+                            <img style="width: 150px;" src="/uruk_reports_layout/static/img/logo.png"/>
+
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+                    <div class="article o_report_layout_standard">
+                        <div style="position: absolute; height:1015px; border-right:1px solid #727376 ; right: 23px;top: 0px;"/>
+                        <div class="page" style="z-index:100px">
+                            <style type="text/css">
+                        @font-face {
+                        font-family: 'Sans_Arabic';
+                        src: local('Sans_Arabic'), local('Sans_Arabic'),
+                        url(/uruk_reports_layout/static/fonts/uruk-fonts/Neo_Sans_Arabic_Regular.ttf) format('truetype');
+                        }
+
+                        * {
+                        font-family: Sans_Arabic !important;
+
+                        }
+
+
+                        .header{
+                        font-family: Sans_Arabic !important;
+                        }
+                        
+                        .table thead th {
+                            font-weight: lighter;
+                        	vertical-align: bottom;
+                        	border-bottom: 1px solid #727376;
+                        	border-right: 0px solid #727376;
+                        	border-left: 1px solid #727376;
+                        }
+                        
+                        
+                        .table th, .table td {
+                            font-weight: lighter;
+                        	padding: 0.75rem;
+                        	vertical-align: top;
+                        	border-top: 1px solid #727376;
+                        
+                        	border-bottom: 1px solid #727376;
+                        	border-right: 1px solid #727376;
+                        	border-left: 1px solid #727376;
+                        }
+                                                
+                        b, strong {
+                            font-weight: lighter !important;
+                        }
+
+
+                       strong {
+                            font-weight: lighter !important;
+                        }
+
+
+                        h5, .h5 {
+                            font-size: 1.13rem !important;
+                        }
+
+       
+                            </style>
+
+                            <div class="row" style="text-align: right; position: absolute; top:0px ;  left:0px;">
+                                <div t-if="doc.partner_shipping_id" class="col-8">
+                                    <h3 class="h1-title" style="font-size:15px">
+                                        <strong>
+                                            <b>: موقع التوصيل </b>
+                                        </strong>
+                                    </h3>
+                                    <div t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                                </div>
+
+                                <div class="col-6 text-right" style="margin-right:400px">
+                                    <h3 class="h1-title" style="font-size:15px">
+                                        <strong>
+                                            <b> : تفاصيل الزبون </b>
+                                        </strong>
+                                    </h3>
+                                    <p style="font-size:15px" class="m-0" t-field="doc.partner_id.name"/>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+
+                        <div class="row" style="text-align: right; position: absolute; top:195px ;  right:60px;">
+                            <p style="text-align: right; position: absolute;  right:220px; top:4px" t-field="doc.invoice_payment_term_id.name"/>
+                            <h4 style="text-align: right; position: absolute;  right:180px; top:4px">
+                                <strong> : </strong>
+                            </h4>
+                            <h5 style="width:1000px">
+                                <strong>  طريقة الدفع</strong>
+                            </h5>
+                        </div>
+
+
+
+
+
+                        <div class="row" style="text-align: right; position: absolute; top:220px;right:40px;">
+                            <div class="col-12">
+                                <p style="text-align: right; position: absolute;  right:240px; top:4px" t-field="doc.invoice_date"/>
+                                <h4 style="text-align: right; position: absolute;  right:200px; top:4px">
+                                    <strong> : </strong>
+                                </h4>
+                                <h5 style="width:1000px">
+                                    <strong> التاريخ  </strong>
+                                </h5>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="row" style="text-align: right; position: absolute ; top:250px ;   right:40px;">
+                            <div class="col-12">
+                                <p style="text-align: right; position: absolute;  right:240px; top:4px" t-field="doc.invoice_date_due"/>
+                                <h4 style="text-align: right; position: absolute;  right:200px; top:4px">
+                                    <strong> : </strong>
+                                </h4>
+                                <h5 style="width:1000px">
+                                    <strong>  تاريخ الاستحقاق</strong>
+                                </h5>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row" style="text-align: right; position: absolute ; top:280px ;   right:40px;">
+                            <div class="col-12">
+                                <p style="text-align: right; position: absolute;  right:240px; top:4px" t-field="doc.ref"/>
+                                <h4 style="text-align: right; position: absolute;  right:200px; top:4px">
+                                    <strong> : </strong>
+                                </h4>
+                                <h5 style="width:1000px">
+                                    <strong>       اشارة الزبون </strong>
+                                </h5>
+                            </div>
+                        </div>
+
+
+                        <div class="container">
+                            <div class="row" style="position:absolute; top:330px; right:40px">
+                                <table class="table" style=" width: 840px;table-layout:auto text-align : right;direction: rtl; ">
+                                    <thead>
+                                        <tr>
+                                            <th name="th_description" class="text-center">ت</th>
+                                            <th name="th_quantity" class="text-center">رمز المادة</th>
+                                            <th name="th_des" class="text-center">وصف المادة</th>
+                                            <th name="th_des" class="text-center">الكمية</th>
+                                            <th name="th_des" class="text-center">الوحدة</th>
+                                            <th name="th_des" class="text-center">السعر</th>
+                                            <th name="th_des" class="text-center">المجموع</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="sale_tbody">
+                                        <t t-set="count" t-value="0"/>
+
+                                        <t t-set="current_subtotal" t-value="0"/>
+
+                                        <t t-foreach="doc.invoice_line_ids" t-as="line">
+
+
+                                            <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                                <t t-if="not line.display_type">
+
+                                                    <t t-set="count" t-value="count+1"/>
+
+                                                    <td class="text-center" style="border-right:0px  !important;">
+                                                        <span t-esc="count"/>
+                                                    </td>
+
+                                                    <td name="td_barcode" class="text-center">
+                                                        <span t-field="line.barcode"/>
+                                                    </td>
+
+                                                    <td name="td_name" class="text-center">
+                                                        <span t-field="line.name"/>
+                                                    </td>
+                                                    <td name="td_qty" class="text-center">
+                                                        <span t-field="line.quantity"/>
+                                                    </td>
+                                                    <td name="td_uom" class="text-center">
+                                                        <span t-field="line.product_uom_id.name"/>
+                                                    </td>
+                                                    <td name="td_price" class="text-center">
+                                                        <span t-field="line.price_unit"/>
+                                                    </td>
+                                                    <td name="td_tot" class="text-center">
+                                                        <span t-field="line.price_subtotal"/>
+                                                    </td>
+
+
+                                                </t>
+                                                <t t-if="line.display_type == 'line_section'">
+                                                    <td name="td_section_line" colspan="99">
+                                                        <span t-field="line.name"/>
+                                                    </td>
+                                                    <t t-set="current_section" t-value="line"/>
+                                                    <t t-set="current_subtotal" t-value="0"/>
+                                                </t>
+                                                <t t-if="line.display_type == 'line_note'">
+                                                    <td name="td_note_line" colspan="99">
+                                                        <span t-field="line.name"/>
+                                                    </td>
+                                                </t>
+                                            </tr>
+
+
+
+                                        </t>
+                                        <tr style="border:0px">
+                                            <td colspan="3" style="border:0px;text-align:start">
+
+
+                                                <span style="border:0px !important" t-esc="doc.amount_to_text(doc.amount_total)"/>
+
+                                            </td>
+                                            <td style="border:0px"/>
+                                            <td style="border:0px"/>
+                                            <td style="border:0px"/>
+
+                                            <td>
+                                                <strong>
+
+
+                                                    <span t-field="doc.amount_total"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+
+
+
+
+                                        <tr style="border:0px">
+
+                                            <td colspan="12" style="border:0px;width : 30% ; text-align:right">
+                                                <strong style=" font-size: 1.13rem !important;">تفاصيل البنك </strong>
+                                            </td>
+
+
+
+                                        </tr>
+
+
+                                        <tr>
+
+
+                                            <td colspan="12" style="width : 30% ;border:0px; text-align:right">
+                                                <span style="font-size:15px">
+                                       اسم الحساب : 
+                                                </span>
+
+                                                <span style="font-size:15px" t-field="doc.partner_id.default_payment_method_id.bank_account_id"/>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+
+                                            <td colspan="12" style="width : 30%; border:0px; text-align:right">
+                                                <span style="font-size:15px">
+                                       اسم البنك  :
+                                                </span>
+
+                                                <span style="font-size:15px" t-field="doc.partner_id.default_payment_method_id.bank_id"/>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+
+                                            <td colspan="12" style="width : 30%; border:0px; text-align:right">
+                                                <span style="font-size:15px">
+                                       رقم الحساب : 
+                                                </span>
+
+                                                <span style="font-size:15px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.acc_number"/>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+
+                                            <td colspan="12" style="width : 30%; border:0px; text-align:right">
+                                                <span style="font-size:15px">
+                                                     سويفت  : 
+                                                </span>
+
+                                                <span style="font-size:15px" t-field="doc.partner_id.default_payment_method_id.bank_account_id.swift"/>
+
+                                            </td>
+
+
+
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="12" style="width : 30%; border:0px; text-align:right;padding-right:40px">
+                                                <strong style="font-size:15px">
+                                       توقيع والختم
+                                                </strong>
+
+
+
+                                            </td>
+
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="footer">
+
+                        <style>
+
+                            @font-face {
+                                    font-family: 'Sans_Arabic';
+                                    src: local('Sans_Arabic'), local('Sans_Arabic'),
+                                    url(/uruk_reports_layout/static/fonts/uruk-fonts/Neo_Sans_Arabic_Regular.ttf) format('truetype');
+                                    }
+
+                                    * {
+                                    font-family: Sans_Arabic !important;
+
+                                    }
+                                            
+                                    .header{
+                                    font-family: Sans_Arabic !important;
+                                    }
+                            
+                            .footer-line {                 
+                                        position: absolute;
+                                        border-right: 1px solid #727376;
+                                        height: 80px;
+                                        transform: matrix;
+                                        transform: rotate(-51deg);
+                                        -ms-transform: rotate(-51deg);
+                                        -webkit-transform: rotate(-142deg);
+                                        top: -22px;
+                                    right: 37px;
+                                        
+                                        }
+                                        
+                                        .footer-div{
+                                        position:absoulte;
+                                        top:0px;
+                                        }
+                        </style>
+
+                        <div class="footer-line"/>
+
+
+                        <h7 style="position: absolute; top:50px; right:80px; font-size:11px; color:black">
+                        شركة مسجلة في العراق برأس مال مدفوع وقدره ملياران ومليوني دينار عراقي
+                        </h7>
+
+                        <h7 style="position: absolute; top:65px; right:80px; font-size:11px; color:black">
+                        ISO 9001:2015 Certified.
+                        </h7>
+                    </div>
+                </t>
+            </t>
+        </t>
+
+
+
+
+
+
+
+
+
+    </template>
+
+    <report id="invoice_arabic_print" string="اوروك فاتورة عربي" model="account.move" report_type="qweb-pdf" name="uruk_reports_layout.report_arabic_invoice" file="uruk_reports_layout.report_arabic_invoice" print_report_name="' فاتورة  - %s' % (object.name).replace('/', '')" />
+
+</odoo>

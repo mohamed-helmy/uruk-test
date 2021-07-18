@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <div name="standard_price_uom" position="attributes">
+                    <attribute  name="groups">ejaf_sales_target.group_show_product_cost</attribute>
+                </div>
+
+                <label for="standard_price" position="attributes">
+                    <attribute  name="groups">ejaf_sales_target.group_show_product_cost</attribute>
+                </label>
+            </field>
+        </record>
+
+        <record id="product_template_tree_view" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="standard_price" position="attributes">
+                    <attribute  name="groups">ejaf_sales_target.group_show_product_cost</attribute>
+                </field>
+
+            </field>
+        </record>
+        <record id="product_product_tree_view" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="standard_price" position="attributes">
+                    <attribute  name="groups">ejaf_sales_target.group_show_product_cost</attribute>
+                </field>
+
+            </field>
+        </record>
+    </data>
+</odoo>

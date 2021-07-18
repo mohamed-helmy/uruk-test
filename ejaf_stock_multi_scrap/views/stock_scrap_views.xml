@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_scrap_form_view" model="ir.ui.view">
+        <field name="name">stock.scrap.form.inherit</field>
+        <field name="model">stock.scrap</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+
+        <field name="arch" type="xml">
+            <button name="action_validate" position="attributes">
+                <attribute name="groups">ejaf_stock_multi_scrap.group_manager_multi_scrap</attribute>
+            </button>
+        </field>
+    </record>
+
+</odoo>

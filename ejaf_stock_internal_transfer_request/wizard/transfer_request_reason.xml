@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="transfer_request_reason_form" model="ir.ui.view">
+            <field name="name">transfer.request.wizard</field>
+            <field name="model">transfer.request.reason</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="reject_reason"/>
+                    </group>
+                    <footer>
+                        <button name="reject_request" string="Reject" type="object" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
