@@ -55,9 +55,11 @@ class PosOrderInherit(models.Model):
                 _logger.error('Could not fully process the POS Order: %s', tools.ustr(e))
 
         if to_invoice:
-            pos_order.with_context(default_pos_order_id=pos_order.id).action_pos_order_invoice()
-            pos_order.account_move.sudo().with_context(force_company=self.env.user.company_id.id,
-                                                       default_pos_order_id=pos_order.id).post()
+            pos_order.with_context(default_pos_order_id=pos_order.id,
+                                   force_company=self.env.user.company_id.id).action_pos_order_invoice()
+            if pos_order.account_move.state == 'draft':
+                pos_order.account_move.sudo().with_context(force_company=self.env.user.company_id.id,
+                                                           default_pos_order_id=pos_order.id).post()
 
         return pos_order.id
 
